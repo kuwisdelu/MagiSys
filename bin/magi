@@ -9,11 +9,14 @@ nodes = {
 	"02": "Magi-02",
 	"03": "Magi-03"}
 
+syspath = os.getenv("MAGI_SYSPATH", default="/Volumes/Magi/MagiSys")
+
 app = clmanager("Magi",
 	nodes = nodes,
 	version = "0.0.0",
 	date = "2024-01-07",
 	description = "Magi cluster @ NEU",
+	readme = os.path.join(syspath, "README.md"),
 	program = "magi")
 
 if tools.is_known_host(nodes.values()):

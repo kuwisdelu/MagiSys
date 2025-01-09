@@ -3,12 +3,15 @@
 export CONDA_AUTO_ACTIVATE_BASE=false
 alias R="R --no-save"
 alias python=python3
-alias pydoc=pydoc3
-alias pip=pip3
+alias pydoc="python3 -m pydoc"
+alias pip="python3 -m pip"
+alias ipython="python3 -m IPython"
 
-# Magi/MSI environment
-export MSI_DBPATH="/Volumes/Datasets"
+# Magi environment
+export MAGI_DBPATH="/Volumes/Magi/Datasets"
+export MAGI_SYSPATH="/Volumes/Magi/MagiSys"
+export PATH="$MAGI_SYSPATH/bin:$PATH"
+
+# Bioconductor environment
 export BIOCPARALLEL_WORKER_MAX=8
 export BIOCPARALLEL_WORKER_NUMBER=4
-alias magi="python3 $MSI_DBPATH/MSIResearch/lib/magi.py"
-alias msi="python3 $MSI_DBPATH/MSIResearch/lib/msi.py"
