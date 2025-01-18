@@ -1,0 +1,4 @@
+options(
+	prompt="\033[32mR>\033[39m ",
+	continue="\033[35m+\033[39m ",
+	menu.graphics=FALSE)

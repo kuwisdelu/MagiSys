@@ -1,0 +1,4 @@
+# Magi environment
+export MAGI_DBPATH="/Volumes/Magi/Datasets"
+export MAGI_SYSPATH="/Volumes/Magi/MagiSys"
+source "$MAGI_SYSPATH/scripts/activate.sh"
