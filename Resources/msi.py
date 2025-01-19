@@ -22,7 +22,7 @@ app = dbmanager("MSI Research",
 	metadir = dbmeta,
 	version = "0.0.0",
 	date = "2024-01-07",
-	description = "MSI Research database",
+	description = "MSI Research database @ NEU",
 	readme = os.path.join(dbpath, dbname, dbmeta, "README.md"),
 	program = program)
 
