@@ -14,16 +14,16 @@ if dbpath is None:
 	sys.exit("msi: $MAGI_DBPATH is not set")
 
 dbname = "MSI"
-dbmeta = "MSIResearch"
+metaname = "MSIResearch"
 
-app = dbmanager("MSI Research", 
-	dbpath=dbpath,
-	dbname=dbname,
-	metadir = dbmeta,
-	version = "0.0.0",
-	date = "2024-01-07",
+app = dbmanager("Magi", 
+	dbpath = dbpath,
+	dbname = dbname,
+	metaname = metaname,
+	version = "0.1.0",
+	date = "2024-01-18",
 	description = "MSI Research database @ NEU",
-	readme = os.path.join(dbpath, dbname, dbmeta, "README.md"),
+	readme = os.path.join(dbpath, dbname, metaname, "README.md"),
 	program = program)
 
 if tools.is_known_host(nodes.values()):

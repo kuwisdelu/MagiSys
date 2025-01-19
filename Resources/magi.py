@@ -15,8 +15,8 @@ if syspath is None:
 
 app = clmanager("Magi",
 	nodes = nodes,
-	version = "0.0.0",
-	date = "2024-01-07",
+	version = "0.1.0",
+	date = "2024-01-18",
 	description = "Magi cluster @ NEU",
 	readme = os.path.join(syspath, "README.md"),
 	program = program)
