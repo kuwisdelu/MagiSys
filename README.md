@@ -27,7 +27,7 @@ Currently, the following nodes are available to `viteklab` members:
 
 - `Magi-02` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
 
-- `Magi-03` : xfer node (M2 Pro / 6 p-cores / 4 e-cores / 16 GB)
+- `Magi-03` : data node (M2 Pro / 6 p-cores / 4 e-cores / 16 GB)
 
 Please contact the Magi cluster maintainer for `viteklab` credentials.
 
@@ -51,7 +51,13 @@ Note that X11 forwarding *must* have been requested when connecting to the Khour
 
 The `magi` command line utility provides functionality for accessing the Magi cluster from an external network. It assumes you are running in a UNIX-alike environment that includes `ssh` and `rsync` command line programs.
 
-Recommended usage is to set an alias `magi` in your shell to the command `python3 $MSI_DBPATH/MSIResearch/lib/magi.py`.
+Recommended usage is to clone this repository and then run `scripts/install.sh`. This script will install a virtual environment with the required Python packages. You will then need to update your `.zshrc` or `.bashrc` with the following:
+
+```
+export MAGI_DBPATH="/path/to/Datasets"
+export MAGI_SYSPATH="/path/to/MagiSys"
+source "$MAGI_SYSPATH/scripts/activate.sh"
+```
 
 Additionally, environment variables `$MAGI_USER` and `$MAGI_LOGIN` can be used to automatically set your Magi cluster username and Khoury login information.
 
@@ -60,7 +66,6 @@ For example, in your `.zshrc` or `.bashrc`:
 ```
 export MAGI_USER=viteklab
 export MAGI_LOGIN=<your-khoury-username>
-alias magi="python3 $MSI_DBPATH/MSIResearch/lib/magi.py"
 ```
 
 You can then see the command help with:
@@ -110,30 +115,30 @@ Due to the small number of users, lab members use shared `viteklab` credentials 
 
 Please do not upload large datasets without permission. Home directory storage is intended for processed data and analysis results. Contact the Magi cluster maintainer to add datasets to the cluster's storage devices.
 
-### Shared lab directories
+### Magi user directories
 
-Please use the following directories for data management:
+The following directories are provided:
 
 - `~/Datasets/`
     + Includes `MSIResearch` repository and dataset manifest
     + Includes locally cached MSI datasets
     + Manage using `msi` command line utility
 
+- `~/Modules/`
+    + Network storage for modules and environments
+    + Manage using `conda create -n`
+
 - `~/Projects/`
-    + Directory for analysis projects
+    + Network storage for projects
     + Create subdirectories for your analyses
     + Stable storage that will not be removed without notification
 
 - `~/Scratch/`
-    + Directory for temporary files
+    + Local temporary storage for working files
     + Create subdirectories for your scratch space
     + May be deleted without warning
 
-- `~/Documents/`
-    + Directory for lab documents
-    + Use to share documents and reports with other lab members
-
-Please give your subdirectories clear, descriptive names within these directories.
+Please give your subdirectories in `Projects` clear, descriptive names within these directories.
 
 ### Copying files
 
@@ -244,7 +249,7 @@ This is useful for sharing an ongoing task among lab members, but please be care
 
 ## Software
 
-The default software is listed in `Magi-INFO.md`.
+The default software is listed in `manifest.md`.
 
 If you need *specific versions* of packages, please create a virtual environment using `conda create` (for multiple dependencies), `venv` (for Python packages), or `renv` (for R packages) and install packages into the virtual environment.
 
@@ -266,53 +271,42 @@ The system Python is aliased as `python=python3` and `pip=pip3`.
 
 Additional Python interpreters are available through `conda create`.
 
-### Miniconda
+### Conda
 
-Miniconda 3 is installed to provide package management and environments with `conda`.
+Miniforge is installed to provide package management and environments with `conda`.
 
 While the system R and Python are set up to provide a useful out-of-the-box scientific computing environment, more specific environment needs are best handled using `conda`.
 
-By default, `conda` is not active. Activate the base `conda` environment by using:
-
-```
-conda activate
-```
-
-Deactivate the current `conda` environment by using:
-
-```
-conda deactivate
-```
-
-If you have specific environment needs, please create a descriptively-named `conda` environment.
+Create a `conda` environment if you need to install project-specific dependencies.
 
 For example:
 
 ```
-conda create -p ~/Scratch/testenv
-conda activate ~/Scratch/testenv
+conda create -n test-env
+conda activate test-env
 ```
 
-You can then install dependencies using `conda` or `pip`.
+You can then install dependencies using `conda install` or `pip install`.
 
 To get a specific version of Python, you can do:
 
 ```
-conda create -p ~/Scratch/pythonenv python=3.12
+conda create -n python-env python=3.12
 ```
 
 To get an environment with `tensorflow-metal`:
 
 ```
-conda create -p ~/Scratch/tfenv python=3.10
-conda activate ~/Scratch/tfenv
-pip install tensorflow tensorflow-macos tensorflow-metal
+conda create -n tf-env python=3.10
+conda activate tf-env
+pip install tensorflow
+pip install tensorflow-metal
 ```
 
 To get an environment with `pytorch-nightly`:
 
 ```
-conda create -p ~/Scratch/torchenv numpy pytorch torchvision torchaudio -c pytorch-nightly
+conda create -n torch-env numpy pytorch torchvision torchaudio -c pytorch-nightly
 ```
 
 For additional details, please see https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html.
@@ -320,10 +314,10 @@ For additional details, please see https://docs.conda.io/projects/conda/en/lates
 To remove unused environments, after deactivating them, use:
 
 ```
-conda env remove -p ~/Scratch/testenv
-conda env remove -p ~/Scratch/pythonenv
-conda env remove -p ~/Scratch/tfenv
-conda env remove -p ~/Scratch/torchenv
+conda env remove -n test-env
+conda env remove -n python-env
+conda env remove -n tf-env
+conda env remove -n torch-env
 ```
 
 ### Homebrew
@@ -346,7 +340,7 @@ Please use virtual environments as needed to avoid creating conflicts in the sys
 
 It should generally be safe to install additional R packages with `install.packages()`.
 
-It is acceptable to install additional Python packages with `pip install` *if they do not conflict with the system `tensorflow-metal` and `pytorch-nightly` installations*. If you are not sure, please install packages to a virtual environment instead.
+Please install Python packages to a virtual environment instead.
 
 Environments can become quite large, so please try to re-use your environments as much as possible, and remove unused environments.
 

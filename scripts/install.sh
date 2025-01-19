@@ -10,7 +10,9 @@ echo "Installing badwulf to virtual environment..."
 python3 -m pip install badwulf
 deactivate
 echo "To complete installation, add the following to ~/.zshrc:"
-echo '| export MAGI_DBPATH="/path/to/Datasets"'
-echo '| export MAGI_SYSPATH="/path/to/MagiSys"'
-echo '| source "$MAGI_SYSPATH/scripts/activate.sh"'
+echo "==="
+echo 'export MAGI_DBPATH="/path/to/Datasets"'
+echo 'export MAGI_SYSPATH="/path/to/MagiSys"'
+echo 'source "$MAGI_SYSPATH/scripts/activate.sh"'
+echo "==="
 echo "Done!"
