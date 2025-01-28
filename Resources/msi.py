@@ -27,15 +27,17 @@ app = dbmanager("Magi",
 	program = program)
 
 if tools.is_known_host(nodes.values()):
+	app.username = os.getlogin()
 	app.remote_dbhost = "Magi-03.local"
 	app.remote_dbpath = "/Volumes/MagiFS/Datasets"
 	app.server = None
 	app.server_username = None
 else:
+	app.username = os.getenv("MAGI_USER", default="viteklab")
 	app.remote_dbhost = "Magi-03"
 	app.remote_dbpath = "/Volumes/MagiFS/Datasets"
 	app.server = "login.khoury.northeastern.edu"
-	app.server_username = os.getenv("MAGI_LOGIN", "viteklab")
+	app.server_username = os.getenv("MAGI_LOGIN")
 
 if __name__ == "__main__":
 	app.main()
