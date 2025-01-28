@@ -35,7 +35,7 @@ else:
 	app.remote_dbhost = "Magi-03"
 	app.remote_dbpath = "/Volumes/MagiFS/Datasets"
 	app.server = "login.khoury.northeastern.edu"
-	app.server_username = os.getenv("MAGI_LOGIN")
+	app.server_username = os.getenv("MAGI_LOGIN", "viteklab")
 
 if __name__ == "__main__":
 	app.main()
