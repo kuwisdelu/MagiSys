@@ -9,15 +9,15 @@ nodes = {
 	"02": "Magi-02",
 	"03": "Magi-03"}
 
-syspath = os.getenv("MAGI_SYSPATH")
-if syspath is None:
-	sys.exit("magi: $MAGI_SYSPATH is not set")
+prefix = os.getenv("MAGI_PREFIX")
+if prefix is None:
+	sys.exit(f"{program}: $MAGI_PREFIX is not set")
 
 app = clmanager("Magi",
 	nodes = nodes,
 	date = "2025-08-28",
 	description = "Magi cluster @ NEU",
-	readme = os.path.join(syspath, "README.md"),
+	readme = os.path.join(prefix, "MagiSys", "README.md"),
 	program = program)
 
 if tools.is_known_host(nodes.values()):
