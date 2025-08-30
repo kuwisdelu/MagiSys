@@ -143,7 +143,7 @@ then
 fi
 
 echo "Creating Magi system repository $MAGI_SYSPATH"
-git -C "$MAGI_PREFIX" clone git@github.com:kuwisdelu/MagiSys.git --quiet
+git -C "$MAGI_PREFIX" clone https://github.com/kuwisdelu/MagiSys.git --quiet
 
 MAGI_VENV="$MAGI_SYSPATH/venv"
 MAGI_PYTHON="$MAGI_VENV/bin/python3"
