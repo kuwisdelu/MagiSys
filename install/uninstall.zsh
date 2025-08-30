@@ -17,7 +17,7 @@ then
 fi
 
 MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/MagiEnv.zsh"
+MAGI_SYSENV="$MAGI_PREFIX/activate.zsh"
 
 # 
 # setup utility functions

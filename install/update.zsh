@@ -17,6 +17,7 @@ then
 fi
 
 MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
+MAGI_SYSENV="$MAGI_PREFIX/activate.zsh"
 
 # 
 # setup utility functions
@@ -114,6 +115,8 @@ fi
 echo "Updating badwulf in virtual environment"
 eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
 eval "$MAGI_PYTHON" -m pip install badwulf --upgrade --quiet
+
+installMagiEnv $MAGI_SYSENV
 
 # 
 # install Magi data

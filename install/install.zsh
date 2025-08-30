@@ -20,7 +20,7 @@ then
 fi
 
 MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/MagiEnv.zsh"
+MAGI_SYSENV="$MAGI_PREFIX/activate.zsh"
 
 # 
 # setup utility functions
@@ -154,6 +154,8 @@ echo "Installing badwulf in virtual environment"
 eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
 eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade --quiet
 
+installMagiEnv $MAGI_SYSENV
+
 # 
 # install Magi research data
 # 
@@ -181,8 +183,6 @@ installDataManifest MSI https://raw.githubusercontent.com/kuwisdelu/MSIResearch/
 # complete installation
 # 
 
-installMagiEnv $MAGI_SYSENV
-
 MAGI_INIT=""
 MAGI_INIT="$MAGI_INIT\n# >>> Magi initialization <<<"
 MAGI_INIT="$MAGI_INIT\nsource '$MAGI_SYSENV'"
@@ -198,6 +198,8 @@ if [[ $(askYesNo) == "y" ]]
 then
 	echo $MAGI_INIT >> ~/.zshrc
 fi
+
+source "$MAGI_SYSENV"
 
 echo "Done"
 echo "You may need to restart your shell for changes to take effect"

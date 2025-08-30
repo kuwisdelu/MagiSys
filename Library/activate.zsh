@@ -5,7 +5,6 @@ magi() {
 	then
 		MAGI_PYTHON="$MAGI_PREFIX/MagiSys/venv/bin/python3"
 	fi
-	echo "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magi.py" "$@"
 	eval "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magi.py" "$@"
 }
 
@@ -14,6 +13,5 @@ magidb() {
 	then
 		MAGI_PYTHON="$MAGI_PREFIX/MagiSys/venv/bin/python3"
 	fi
-	echo "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magidb.py" "$@"
 	eval "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magidb.py" "$@"
 }
