@@ -20,7 +20,7 @@ then
 fi
 
 MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/activate.sh"
+MAGI_SYSENV="$MAGI_PREFIX/MagiEnv.sh"
 
 # 
 # setup utility functions
@@ -184,11 +184,20 @@ echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $MAGI_SYSENV
 echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $MAGI_SYSENV
 echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $MAGI_SYSENV
 
+MAGI_INIT=""
+MAGI_INIT="$MAGI_INIT\n# >>> Magi initialization <<<"
+MAGI_INIT="$MAGI_INIT\nsource '$MAGI_SYSENV'"
+MAGI_INIT="$MAGI_INIT\n# <<< Magi initialization <<<"
+
 echo
 echo "Finished moving files into place"
-echo "To complete installation, add the following to your ~/.zshrc:"
-echo 
-echo "# >>> Magi initialization <<<"
-echo "source '$MAGI_SYSENV'"
-echo "# <<< Magi initialization <<<"
+echo "To complete installation, the following will be appended to your ~/.zshrc:"
+echo $MAGI_INIT
 echo
+
+if [[ $(askYesNo) == "y" ]]
+then
+	echo $MAGI_INIT >> ~/.zshrc
+fi
+
+source "$MAGI_SYSENV"
