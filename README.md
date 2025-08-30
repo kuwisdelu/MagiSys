@@ -51,12 +51,22 @@ Note that X11 forwarding *must* have been requested when connecting to the Khour
 
 The `magi` command line utility provides functionality for accessing the Magi cluster from an external network. It assumes you are running in a UNIX-alike environment that includes `ssh` and `rsync` command line programs.
 
-Recommended usage is to clone this repository and then run `scripts/install.sh`. This script will install a virtual environment with the required Python packages. You will then need to update your `.zshrc` or `.bashrc` with the following:
+To install the `magi` command line utility, run the following line in Terminal:
 
 ```
-export MAGI_DBPATH="/path/to/Datasets"
-export MAGI_SYSPATH="/path/to/MagiSys"
-source "$MAGI_SYSPATH/scripts/activate.sh"
+/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/kuwisdelu/MagiSys/HEAD/install/install.zsh)"
+```
+
+To update `magi`, run:
+
+```
+eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+```
+
+To uninstall `magi`, run:
+
+```
+eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
 ```
 
 Additionally, environment variables `$MAGI_USER` and `$MAGI_LOGIN` can be used to automatically set your Magi cluster username and Khoury login information.
