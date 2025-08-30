@@ -57,7 +57,7 @@ fi
 
 echo "This script will uninstall:"
 echo "$MAGI_SYSENV"
-echo "$MAGI_SYSPATH"
+echo "$MAGI_SYSPATH/"
 
 if [[ $(askYesNo) == "y" ]]
 then
@@ -80,7 +80,7 @@ fi
 # ask user permission to uninstall Magi data
 
 echo "This script now uninstall:"
-echo "$MAGI_DBPATH"
+echo "$MAGI_DBPATH/"
 
 if [[ $(askYesNo) == "y" ]]
 then

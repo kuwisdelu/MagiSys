@@ -83,10 +83,11 @@ installMagiEnv() {
 		echo "Removing old environment $1"
 		rm "$1"
 	fi
-	cat "$MAGI_PREFIX/MagiSys/Library/MagiEnv.zsh" > $1
+	cat "$MAGI_PREFIX/MagiSys/Library/activate.zsh" > $1
 	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
 	echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $1
 	echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $1
+	echo "Installed environment $1"
 }
 
 # 
@@ -94,10 +95,10 @@ installMagiEnv() {
 # 
 
 echo "This script will install:"
-echo "$MAGI_PREFIX"
+echo "$MAGI_PREFIX/"
 echo "$MAGI_SYSENV"
-echo "$MAGI_SYSPATH"
-echo "$MAGI_DBPATH"
+echo "$MAGI_SYSPATH/"
+echo "$MAGI_DBPATH/"
 
 if [[ $(askYesNo) == "n" ]]
 then
@@ -201,5 +202,5 @@ fi
 
 source "$MAGI_SYSENV"
 
-echo "Done"
+echo "Finished installing"
 echo "You may need to restart your shell for changes to take effect"
