@@ -4,29 +4,14 @@
 # get installation locations
 # 
 
-if [[ -n "$1" ]]
-then
-	MAGI_PREFIX="$1"
-fi
-
 if [[ ! -n "$MAGI_PREFIX" ]]
 then
 	export MAGI_PREFIX=~/.MagiSys
 fi
 
-if [[ -n "$2" ]]
-then
-	MAGI_DBPATH="$2"
-fi
-
 if [[ ! -n "$MAGI_DBPATH" ]]
 then
 	export MAGI_DBPATH="$MAGI_PREFIX/Datasets"
-fi
-
-if [[ -n "$3" ]]
-then
-	MAGI_DBNAME="$3"
 fi
 
 if [[ ! -n "$MAGI_DBNAME" ]]
