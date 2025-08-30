@@ -1,4 +1,5 @@
 import os
+import sys
 from badwulf.cli import dbmanager
 from badwulf import tools
 
