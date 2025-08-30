@@ -6,13 +6,13 @@
 
 if [[ ! -n "$MAGI_PREFIX" ]]
 then
-	echo "error: $MAGI_PREFIX not set"
+	echo "error: \$MAGI_PREFIX not set"
 	exit
 fi
 
 if [[ ! -n "$MAGI_DBPATH" ]]
 then
-	echo "error: $MAGI_DBPATH not set"
+	echo "error: \$MAGI_DBPATH not set"
 	exit
 fi
 
