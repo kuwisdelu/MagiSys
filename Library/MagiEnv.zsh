@@ -1,7 +1,7 @@
 # Magi system environment
 
 magi() {
-	if [ ! -n $MAGI_PYTHON ]
+	if [[ ! -n $MAGI_PYTHON ]]
 	then
 		MAGI_PYTHON="$MAGI_PREFIX/MagiSys/venv/bin/python3"
 	fi
@@ -10,7 +10,7 @@ magi() {
 }
 
 magidb() {
-	if [ ! -n $MAGI_PYTHON ]
+	if [[ ! -n $MAGI_PYTHON ]]
 	then
 		MAGI_PYTHON="$MAGI_PREFIX/MagiSys/venv/bin/python3"
 	fi

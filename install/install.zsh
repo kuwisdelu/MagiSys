@@ -20,7 +20,7 @@ then
 fi
 
 MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/MagiEnv.sh"
+MAGI_SYSENV="$MAGI_PREFIX/MagiEnv.zsh"
 
 # 
 # setup utility functions
@@ -75,6 +75,18 @@ installDataManifest() {
 		echo "error: failed to install $MANIFEST_FILE"
 		return 1
 	fi
+}
+
+installMagiEnv() {
+	if [[ -e "$1" ]]
+	then
+		echo "Removing old environment $1"
+		rm "$1"
+	fi
+	cat "$MAGI_PREFIX/MagiSys/Library/MagiEnv.zsh" > $1
+	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
+	echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $1
+	echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $1
 }
 
 # 
@@ -169,20 +181,7 @@ installDataManifest MSI https://raw.githubusercontent.com/kuwisdelu/MSIResearch/
 # complete installation
 # 
 
-if [[ -e "$MAGI_SYSENV" ]]
-then
-	echo "$MAGI_SYSENV will be overwritten"
-	if [[ $(askYesNo) == "n" ]]
-	then
-		exit
-	fi
-	rm -rf "$MAGI_SYSENV"
-fi
-
-cat "$MAGI_SYSPATH/Library/MagiEnv.sh" > $MAGI_SYSENV
-echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $MAGI_SYSENV
-echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $MAGI_SYSENV
-echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $MAGI_SYSENV
+installMagiEnv $MAGI_SYSENV
 
 MAGI_INIT=""
 MAGI_INIT="$MAGI_INIT\n# >>> Magi initialization <<<"
@@ -200,4 +199,5 @@ then
 	echo $MAGI_INIT >> ~/.zshrc
 fi
 
-source "$MAGI_SYSENV"
+echo "Done"
+echo "You may need to restart your shell for changes to take effect"
