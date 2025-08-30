@@ -9,6 +9,8 @@ nodes = {
 	"02": "Magi-02",
 	"03": "Magi-03"}
 
+head = "Magi-01"
+
 prefix = os.getenv("MAGI_PREFIX")
 if prefix is None:
 	sys.exit(f"{program}: $MAGI_PREFIX is not set")
@@ -18,7 +20,9 @@ app = clmanager("Magi",
 	date = "2025-08-28",
 	description = "Magi cluster @ NEU",
 	readme = os.path.join(prefix, "MagiSys", "README.md"),
-	program = program)
+	program = program,
+	head = head,
+	restrict = True)
 
 if tools.is_known_host(nodes.values()):
 	app.username = os.getlogin()

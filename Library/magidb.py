@@ -9,6 +9,8 @@ nodes = {
 	"02": "Magi-02",
 	"03": "Magi-03"}
 
+head = "Magi-01"
+
 dbpath = os.getenv("MAGI_DBPATH")
 if dbpath is None:
 	sys.exit(f"{program}: $MAGI_DBPATH is not set")
@@ -23,17 +25,18 @@ app = dbmanager("Magi",
 	date = "2025-08-28",
 	description = "Magi cluster research data @ NEU",
 	readme = os.path.join(dbpath, "README.md"),
-	program = program)
+	program = program,
+	scopes = ("Private", "Protected", "Public"))
 
 if tools.is_known_host(nodes.values()):
 	app.username = os.getlogin()
-	app.remote_dbhost = "Magi-01.local"
+	app.remote_dbhost = f"{head}.local"
 	app.remote_dbpath = "/Volumes/Dogma/Datasets"
 	app.server = None
 	app.server_username = None
 else:
 	app.username = os.getenv("MAGI_USER", default="viteklab")
-	app.remote_dbhost = "Magi-01"
+	app.remote_dbhost = head
 	app.remote_dbpath = "/Volumes/Dogma/Datasets"
 	app.server = "login.khoury.northeastern.edu"
 	app.server_username = os.getenv("MAGI_LOGIN")
