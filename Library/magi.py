@@ -27,7 +27,7 @@ else:
 
 app = clmanager("Magi",
 	nodes = nodes,
-	date = "2025-08-28",
+	date = "2025-09-01",
 	description = "Magi cluster @ NEU",
 	readme = os.path.join(prefix, "MagiSys", "README.md"),
 	program = program,

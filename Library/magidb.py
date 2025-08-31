@@ -36,7 +36,7 @@ else:
 app = dbmanager(
 	dbpath = dbpath,
 	dbname = dbname,
-	date = "2025-08-28",
+	date = "2025-09-01",
 	description = "Magi cluster research data @ NEU",
 	readme = os.path.join(dbpath, "README.md"),
 	program = program,
