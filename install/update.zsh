@@ -78,7 +78,6 @@ installMagiEnv() {
 	if [[ -e "$1" ]]
 	then
 		echo "Removing old environment $1"
-		rm "$1"
 	fi
 	cat "$MAGI_PREFIX/MagiSys/Library/activate.zsh" > $1
 	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
