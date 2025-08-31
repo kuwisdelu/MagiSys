@@ -25,13 +25,13 @@ if tools.is_known_host(nodes.values()):
 	remote_dbhost = f"{xfer}.local"
 	remote_dbpath = "/Volumes/Dogma/Datasets"
 	server = None
-	server_username = None
+	server_user = None
 else:
 	user = os.getenv("MAGI_USER", default="viteklab")
 	remote_dbhost = xfer
 	remote_dbpath = "/Volumes/Dogma/Datasets"
 	server = "login.khoury.northeastern.edu"
-	server_username = os.getenv("MAGI_LOGIN")
+	server_user = os.getenv("MAGI_LOGIN")
 
 app = dbmanager(
 	dbpath = dbpath,
