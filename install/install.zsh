@@ -141,7 +141,7 @@ then
 	rm -rf "$MAGI_SYSPATH"
 fi
 
-echo "Creating Magi system repository $MAGI_SYSPATH"
+echo "Cloning Magi system repository $MAGI_SYSPATH"
 git -C "$MAGI_PREFIX" clone https://github.com/kuwisdelu/MagiSys.git --quiet
 
 MAGI_VENV="$MAGI_SYSPATH/venv"
