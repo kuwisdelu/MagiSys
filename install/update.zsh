@@ -132,7 +132,10 @@ then
 fi
 
 echo "Downloading data manifests to $MAGI_DBPATH"
-installDataManifest MSI https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD/manifest.toml
+
+MAGI_DBREPO=https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD
+curl -fsSL "$MAGI_DBREPO/README.md" > "$MAGI_DBPATH/README.md"
+installDataManifest MSI "$MAGI_DBREPO/manifest.toml"
 
 # 
 # complete update

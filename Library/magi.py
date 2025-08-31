@@ -16,6 +16,15 @@ prefix = os.getenv("MAGI_PREFIX")
 if prefix is None:
 	sys.exit(f"{program}: $MAGI_PREFIX is not set")
 
+if tools.is_known_host(nodes.values()):
+	user = os.getlogin()
+	server = None
+	server_user = None
+else:
+	user = os.getenv("MAGI_USER", default="viteklab")
+	server = "login.khoury.northeastern.edu"
+	server_user = os.getenv("MAGI_LOGIN")
+
 app = clmanager("Magi",
 	nodes = nodes,
 	date = "2025-08-28",
@@ -23,16 +32,11 @@ app = clmanager("Magi",
 	readme = os.path.join(prefix, "MagiSys", "README.md"),
 	program = program,
 	head = head,
-	restrict = True)
-
-if tools.is_known_host(nodes.values()):
-	app.username = os.getlogin()
-	app.server = None
-	app.server_username = None
-else:
-	app.username = os.getenv("MAGI_USER", default="viteklab")
-	app.server = "login.khoury.northeastern.edu"
-	app.server_username = os.getenv("MAGI_LOGIN")
+	xfer = head,
+	restrict = True,
+	username = user,
+	server = server,
+	server_username = server_user)
 
 if __name__ == "__main__":
 	app.main()

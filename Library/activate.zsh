@@ -22,10 +22,14 @@ magidb() {
 	eval "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magidb.py" "$@"
 }
 
-magisys_update() {
-	eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+magisys_install() {
+	eval "$MAGI_PREFIX/MagiSys/install/install.zsh"
 }
 
 magisys_uninstall() {
 	eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+}
+
+magisys_update() {
+	eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
 }
