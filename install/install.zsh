@@ -83,6 +83,7 @@ installMagiEnv() {
 		echo "Removing old environment $1"
 	fi
 	cat "$MAGI_PREFIX/MagiSys/Library/activate.zsh" > $1
+	echo "" >> $1
 	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
 	echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $1
 	echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $1
@@ -186,7 +187,7 @@ installDataManifest MSI "$MAGI_DBREPO/manifest.toml"
 # complete installation
 # 
 
-MAGI_INIT="\n"
+MAGI_INIT=""
 MAGI_INIT="$MAGI_INIT\n# >>> Magi initialization <<<"
 MAGI_INIT="$MAGI_INIT\nsource '$MAGI_SYSENV'"
 MAGI_INIT="$MAGI_INIT\n# <<< Magi initialization <<<"
