@@ -1,5 +1,6 @@
 # Magi system environment
 # 
+# The following can be customized in ~/.zshrc
 # $MAGI_PREFIX sets the Magi system location
 # $MAGI_DBPATH sets the Magi data location
 # $MAGI_DBNAME sets the default data collection
@@ -20,10 +21,6 @@ magidb() {
 		MAGI_PYTHON="$MAGI_PREFIX/MagiSys/venv/bin/python3"
 	fi
 	eval "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magidb.py" "$@"
-}
-
-magisys_install() {
-	eval "$MAGI_PREFIX/MagiSys/install/install.zsh"
 }
 
 magisys_uninstall() {
