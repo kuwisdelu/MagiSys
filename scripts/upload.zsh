@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# ./download.sh [NODE] [PORT] [LOGIN] /src/ /dest/
+# ./upload.zsh [NODE] [PORT] [LOGIN] /src /dest
 # $1 NODE must specify Magi node
 # $2 PORT must be >=1024
 # $3 LOGIN for login.khoury.northeastern.edu
@@ -16,8 +16,8 @@ pid=$!
 sleep 1
 echo "forwarding to Magi-$1 on port $2"
 sleep 1
-echo "downloading from: '$4'"
-echo "downloading to: '$5'"
-rsync -aP --rsh="ssh -p $2" viteklab@localhost:$4 $5
+echo "uploading from: '$4'"
+echo "uploading to: '$5'"
+rsync -aP --rsh="ssh -p $2" $4 viteklab@localhost:$5
 kill $pid
 echo "closing connection to server"

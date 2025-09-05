@@ -6,7 +6,12 @@
 
 if [[ ! -n "$MAGI_PREFIX" ]]
 then
-	export MAGI_PREFIX=~/.MagiSys
+	if [[ -d "/Volumes/Magisys" ]]
+	then
+		export MAGI_PREFIX="/Volumes/Magisys"
+	else
+		export MAGI_PREFIX=~/.MagiSys
+	fi
 fi
 
 if [[ ! -n "$MAGI_DBPATH" ]]

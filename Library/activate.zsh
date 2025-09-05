@@ -1,11 +1,14 @@
 # Magi system environment
-# 
-# The following can be customized in ~/.zshrc
-# $MAGI_PREFIX sets the Magi system location
-# $MAGI_DBPATH sets the Magi data location
-# $MAGI_DBNAME sets the default data collection
-# $MAGI_USER sets the Magi cluster username
-# $MAGI_LOGIN sets the Khoury login server username
+# -----------------------
+# This file will get copied to $MAGI_PREFIX/activate.zsh
+# Environment variables:
+# $MAGI_PREFIX sets the Magi system location (*)
+# $MAGI_DBPATH sets the Magi data location  (*)
+# $MAGI_DBNAME sets the default data collection  (*)
+# $MAGI_USER sets the Magi cluster username (++)
+# $MAGI_LOGIN sets the Khoury login server username (++)
+# (*) These are installed to $MAGI_PREFIX/activate.zsh
+# (++) These should be customized in ~/.zshrc
 
 magi() {
 	if [[ ! -n $MAGI_PYTHON ]]

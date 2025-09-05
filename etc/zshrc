@@ -1,3 +1,6 @@
+# Magi activation
+source "/Volumes/Magisys/activate.zsh"
+
 # Magi aliases
 alias R="R --no-save --no-restore"
 alias python=python3

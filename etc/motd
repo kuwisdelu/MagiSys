@@ -1,6 +1,5 @@
 [0;36m
-======================================================================
-You have logged into a protected cluster node $HOSTNAME
-For tutorials, you can run `magi readme` or `msi readme`
+---------------------------------------------------------
+You are connected to the Magi cluster for spatial biology
 For issues, post to #magi on olga-vitek-lab.slack.com
-======================================================================
+---------------------------------------------------------
