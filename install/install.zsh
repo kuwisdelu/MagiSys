@@ -104,6 +104,10 @@ echo "$MAGI_PREFIX/"
 echo "$MAGI_SYSENV"
 echo "$MAGI_SYSPATH/"
 echo "$MAGI_DBPATH/"
+if [[ -d "$MAGI_DBPATH" ]]
+then
+	echo "Existing data in $MAGI_DBPATH/ will be preserved"
+fi
 
 if [[ $(askYesNo) == "n" ]]
 then
