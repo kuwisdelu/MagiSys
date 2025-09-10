@@ -29,19 +29,15 @@ magidb() {
 magisys() {
 	if [[ $1 = "update" ]]
 	then
-		source "$MAGI_PREFIX/MagiSys/install/update.zsh"
-	
-	elif [[ $1 = "reinstall" ]]
-	then
-		source "$MAGI_PREFIX/MagiSys/install/install.zsh"
+		zsh "$MAGI_PREFIX/MagiSys/install/update.zsh"
 	
 	elif [[ $1 = "uninstall" ]]
 	then
-		source "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+		zsh "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
 	
 	elif [[ $1 = "init" ]]
 	then
-		source "$MAGI_PREFIX/MagiSys/scripts/init.zsh"
+		zsh "$MAGI_PREFIX/MagiSys/scripts/init.zsh"
 	
 	elif [[ -n $1 ]]
 	then
@@ -54,11 +50,10 @@ magisys() {
 		echo
 		echo "SYSTEM COMMANDS:"
 		echo "  update       Update the system"
-		echo "  reinstall    Reinstall the system"
 		echo "  uninstall    Remove the system"
 		echo
 		echo "NODE COMMANDS:"
-		echo "  init         Initialize user's home"
+		echo "  init         Initialize user"
 		echo
 	fi
 }
