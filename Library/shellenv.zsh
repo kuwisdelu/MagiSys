@@ -59,5 +59,6 @@ magisys() {
 		echo
 		echo "USER COMMANDS:"
 		echo "  init         Initialize user's home"
+		echo
 	fi
 }

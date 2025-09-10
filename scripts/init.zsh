@@ -4,6 +4,11 @@ echo "Initializing home directory for $USER"
 
 HOME_IS_MOUNTED=0
 
+if [[ -d "$MAGI_DBPATH" ]]
+then
+	echo "Detected '$MAGI_DBPATH'"
+fi
+
 if [[ -d "$MAGI_PREFIX/Users/$USER/Modules" ]]
 then
 	echo "Detected '$MAGI_PREFIX/Users/$USER/Modules'"
@@ -32,6 +37,8 @@ if [[ $HOME_IS_MOUNTED = 0 ]]
 then
 	echo "Mounting '$MAGI_PREFIX/Users/$USER'"
 	mount -vt smbfs //$USER@Magi-01.local/$USER "$MAGI_PREFIX/Users/$USER"
+else
+	echo "Filesystem is already mounted"
 fi
 
 echo "Done"
