@@ -26,7 +26,7 @@ echo "This command should only be run on a Magi node"
 
 if [[ $(askYesNo) == "n" ]]
 then
-	exit
+	return
 fi
 
 echo "Initializing home directory for $USER"
