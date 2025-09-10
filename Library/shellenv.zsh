@@ -57,7 +57,7 @@ magisys() {
 		echo "  reinstall    Reinstall the system"
 		echo "  uninstall    Remove the system"
 		echo
-		echo "USER COMMANDS:"
+		echo "NODE COMMANDS:"
 		echo "  init         Initialize user's home"
 		echo
 	fi
