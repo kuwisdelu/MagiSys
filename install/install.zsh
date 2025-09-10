@@ -6,9 +6,9 @@
 
 if [[ ! -n "$MAGI_PREFIX" ]]
 then
-	if [[ -d "/Volumes/Magisys" ]]
+	if [[ -d "/Volumes/MagiSys" ]]
 	then
-		export MAGI_PREFIX="/Volumes/Magisys"
+		export MAGI_PREFIX="/Volumes/MagiSys"
 	else
 		export MAGI_PREFIX=~/.MagiSys
 	fi

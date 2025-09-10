@@ -29,16 +29,24 @@ magidb() {
 magisys() {
 	if [[ $1 = "update" ]]
 	then
-		eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+		source "$MAGI_PREFIX/MagiSys/install/update.zsh"
+	
 	elif [[ $1 = "reinstall" ]]
 	then
-		eval "$MAGI_PREFIX/MagiSys/install/install.zsh"
+		source "$MAGI_PREFIX/MagiSys/install/install.zsh"
+	
 	elif [[ $1 = "uninstall" ]]
 	then
-		eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+		source "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+	
+	elif [[ $1 = "init" ]]
+	then
+		source "$MAGI_PREFIX/MagiSys/scripts/init.zsh"
+	
 	elif [[ -n $1 ]]
 	then
 		echo "magisys: command not recognized: '$1'"
+	
 	else
 		echo "usage: magisys COMMAND ..."
 		echo
