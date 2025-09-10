@@ -2,6 +2,9 @@
 
 echo "Initializing home directory for $USER"
 
+echo "Updating $HOME/.condarc"
+cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
+
 HOME_IS_MOUNTED=0
 
 if [[ -d "$MAGI_DBPATH" ]]
@@ -40,8 +43,5 @@ then
 else
 	echo "Filesystem is already mounted"
 fi
-
-echo "Updating $Home/.condarc"
-cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
 
 echo "Done"
