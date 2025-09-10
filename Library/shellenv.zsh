@@ -26,10 +26,30 @@ magidb() {
 	eval "$MAGI_PYTHON" "$MAGI_PREFIX/MagiSys/Library/magidb.py" "$@"
 }
 
-magisys_uninstall() {
-	eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
-}
-
-magisys_update() {
-	eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+magisys() {
+	if [[ $1 = "update" ]]
+	then
+		eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+	elif [[ $1 = "reinstall" ]]
+	then
+		eval "$MAGI_PREFIX/MagiSys/install/install.zsh"
+	elif [[ $1 = "uninstall" ]]
+	then
+		eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+	elif [[ -n $1 ]]
+	then
+		echo "magisys: command not recognized: '$1'"
+	else
+		echo "usage: magisys COMMAND ..."
+		echo
+		echo "Manage the Magi system environment"
+		echo
+		echo "SYSTEM COMMANDS:"
+		echo "  update       Update the system"
+		echo "  reinstall    Reinstall the system"
+		echo "  uninstall    Remove the system"
+		echo
+		echo "USER COMMANDS:"
+		echo "  init         Initialize user's home"
+	fi
 }
