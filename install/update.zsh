@@ -102,7 +102,7 @@ fi
 
 echo "Updating Magi system repository $MAGI_SYSPATH"
 
-git -C "$MAGI_SYSPATH" pull origin main
+git -C "$MAGI_SYSPATH" pull origin main --quiet
 
 MAGI_VENV="$MAGI_SYSPATH/venv"
 MAGI_PYTHON="$MAGI_VENV/bin/python3"
