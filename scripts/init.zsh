@@ -41,4 +41,7 @@ else
 	echo "Filesystem is already mounted"
 fi
 
+echo "Updating $Home/.condarc"
+cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
+
 echo "Done"

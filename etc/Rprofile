@@ -1,5 +1,0 @@
-options(
-	prompt="R> ",
-	continue="... ",
-	menu.graphics=FALSE,
-	max.print=10000)
