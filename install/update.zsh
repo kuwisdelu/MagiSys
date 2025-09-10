@@ -102,7 +102,7 @@ fi
 
 echo "Updating Magi system repository $MAGI_SYSPATH"
 
-git -C "$MAGI_SYSPATH" pull origin main --quiet
+git -C "$MAGI_SYSPATH" pull origin main
 
 MAGI_VENV="$MAGI_SYSPATH/venv"
 MAGI_PYTHON="$MAGI_VENV/bin/python3"
@@ -115,8 +115,8 @@ then
 fi
 
 echo "Updating badwulf in virtual environment"
-eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
-eval "$MAGI_PYTHON" -m pip install badwulf --upgrade --quiet
+eval "$MAGI_PYTHON" -m pip install pip --upgrade
+eval "$MAGI_PYTHON" -m pip install badwulf --upgrade
 
 installMagiEnv $MAGI_SYSENV
 

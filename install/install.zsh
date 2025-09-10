@@ -153,7 +153,7 @@ then
 fi
 
 echo "Cloning Magi system repository $MAGI_SYSPATH"
-git -C "$MAGI_PREFIX" clone https://github.com/kuwisdelu/MagiSys.git --quiet
+git -C "$MAGI_PREFIX" clone https://github.com/kuwisdelu/MagiSys.git
 
 MAGI_VENV="$MAGI_SYSPATH/venv"
 MAGI_PYTHON="$MAGI_VENV/bin/python3"
@@ -162,8 +162,8 @@ echo "Creating virtual environment at $MAGI_VENV"
 eval /usr/bin/env python3 -m venv "$MAGI_VENV"
 
 echo "Installing badwulf in virtual environment"
-eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
-eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade --quiet
+eval "$MAGI_PYTHON" -m pip install pip --upgrade
+eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade
 
 installMagiEnv $MAGI_SYSENV
 
