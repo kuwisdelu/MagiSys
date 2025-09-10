@@ -5,6 +5,7 @@ echo "Initializing home directory for $USER"
 echo "Updating $HOME/.condarc"
 cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
 
+echo "Checking for network directories"
 HOME_IS_MOUNTED=0
 
 if [[ -d "$MAGI_DBPATH" ]]
