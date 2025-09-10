@@ -24,7 +24,6 @@ fi
 
 echo "Creating symbolic links in $HOME"
 ln -vsfF "$MAGI_DBPATH" ~/Datasets
-ln -vsfF "$MAGI_PREFIX/Local" ~/Local
 ln -vsfF "$MAGI_PREFIX/Users/$USER/Modules" ~/Modules
 ln -vsfF "$MAGI_PREFIX/Users/$USER/Projects" ~/Projects
 ln -vsfF "$MAGI_PREFIX/Users/$USER/Scratch" ~/Scratch
