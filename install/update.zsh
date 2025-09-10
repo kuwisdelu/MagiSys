@@ -79,8 +79,9 @@ installMagiEnv() {
 	then
 		echo "Removing old environment $1"
 	fi
-	cat "$MAGI_PREFIX/MagiSys/Library/activate.zsh" > $1
+	cat "$MAGI_PREFIX/MagiSys/Library/shellenv.zsh" > $1
 	echo "" >> $1
+	cat "$MAGI_PREFIX/MagiSys/etc/profile" > $1
 	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
 	echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $1
 	echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $1

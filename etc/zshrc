@@ -1,9 +1,0 @@
-# Magi activation
-source "/Volumes/Magisys/activate.zsh"
-
-# Magi aliases
-alias R="R --no-save --no-restore"
-alias python=python3
-alias pydoc="python3 -m pydoc"
-alias pip="python3 -m pip"
-alias venv="python3 -m venv"
