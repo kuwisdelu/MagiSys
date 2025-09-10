@@ -115,8 +115,8 @@ then
 fi
 
 echo "Updating badwulf in virtual environment"
-eval "$MAGI_PYTHON" -m pip install pip --upgrade
-eval "$MAGI_PYTHON" -m pip install badwulf --upgrade
+eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
+eval "$MAGI_PYTHON" -m pip install badwulf --upgrade --quiet
 
 installMagiEnv $MAGI_SYSENV
 

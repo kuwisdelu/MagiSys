@@ -162,8 +162,8 @@ echo "Creating virtual environment at $MAGI_VENV"
 eval /usr/bin/env python3 -m venv "$MAGI_VENV"
 
 echo "Installing badwulf in virtual environment"
-eval "$MAGI_PYTHON" -m pip install pip --upgrade
-eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade
+eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
+eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade --quiet
 
 installMagiEnv $MAGI_SYSENV
 
