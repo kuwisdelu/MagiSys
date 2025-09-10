@@ -2,7 +2,7 @@
 
 echo "Initializing home directory for $USER"
 
-echo "Updating $HOME/.condarc"
+echo "Updating user's '$HOME/.condarc'"
 cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
 
 echo "Checking for network directories"
