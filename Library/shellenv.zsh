@@ -1,6 +1,6 @@
 # Magi system environment
 # -----------------------
-# This file will get copied to $MAGI_PREFIX/activate.zsh
+# This file's contents will get copied to $MAGI_PREFIX/activate.zsh
 # Environment variables:
 # $MAGI_PREFIX sets the Magi system location (*)
 # $MAGI_DBPATH sets the Magi data location  (*)
