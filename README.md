@@ -105,15 +105,21 @@ ssh <your-khoury-username>@login.khoury.northeastern.edu
 
 You can then access the Magi cluster from the Khoury login servers:
 
-`ssh viteklab@Magi-01`
+```
+ssh viteklab@Magi-01
+```
 
 To enable X11 forwarding, use either:
 
-`ssh -X viteklab@Magi-01`
+```
+ssh -X viteklab@Magi-01
+```
 
 or:
 
-`ssh -Y viteklab@Magi-01`
+```
+ssh -Y viteklab@Magi-01
+```
 
 Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
 
