@@ -13,10 +13,10 @@ Jump to a section:
 - [Software](#Software)
 - [Magi versus Discovery](#Magi-versus-Discovery)
 
-
 ## Overview
 
 The data described in this repository is hosted on the Magi cluster. The Magi cluster is a simple network-of-workstations style Beowulf cluster of commodity Mac hardware maintained by Prof. Kylie Ariel Bemis for the Vitek Lab in the Khoury College of Computer Sciences at Northeastern University. Cluster access requires lab membership, PI authorization, and a Khoury login.
+
 
 
 ## Accessing the cluster
@@ -29,23 +29,9 @@ Currently, the following nodes are available to `viteklab` members:
 
 Please contact the Magi cluster maintainer for `viteklab` credentials.
 
-### SSH from Khoury login servers
 
-You can access the Magi cluster from the Khoury login servers:
+### Installation
 
-`ssh viteklab@Magi-01`
-
-To enable X11 forwarding, use either:
-
-`ssh -X viteklab@Magi-01`
-
-or:
-
-`ssh -Y viteklab@Magi-01`
-
-Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
-
-### SSH from external network
 
 The `magi` command line utility provides functionality for accessing the Magi cluster from an external network. It assumes you are running in a UNIX-alike environment that includes `ssh` and `rsync` command line programs.
 
@@ -108,6 +94,118 @@ magi run --help
 ```
 
 
+### SSH keys for Khoury servers
+
+The Magi servers can be accessed from the Khoury login servers at `login.khoury.northeastern.edu`. You must have a Khoury network account to connect using SSH:
+
+```
+ssh <your-khoury-username>@login.khoury.northeastern.edu
+```
+
+It is strongly recommended to set up SSH key-based authentication for the intermediate Khoury login servers.
+
+If you have not already set up SSH keys, this can be done with the following steps:
+
+#### 1. Generate a private key on your local machine:
+
+`ssh-keygen -t ed25519 -C "<your-email>@northeastern.edu"`
+
+Accepting the defaults is fine, but you can add an optional passphrase.
+
+#### 2. Start the ssh-agent in the background:
+
+`eval "$(ssh-agent -s)"`
+
+#### 3. Edit your configuration file:
+
+`vim ~/.ssh/config`
+
+On macOS, if you want to store the (optional) passphrase in your keychain:
+
+```
+Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+Otherwise:
+
+```
+Host *
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+You can also list specific hosts instead of `*`.
+
+#### 4. Add your private key to the ssh-agent:
+
+On macOS, if you used a passphrase, you can do:
+
+`ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
+
+Otherwise:
+
+`ssh-add ~/.ssh/id_ed25519`
+
+#### 5. Copy the public key from your local machine to the Khoury servers:
+
+`ssh-copy-id -i ~/.ssh/id_ed25519.pub <your-khoury-username>@login.khoury.northeastern.edu`
+
+You should now be able to access the Khoury servers using key-based authentication rather than using a password:
+
+`ssh <your-khoury-username>@login.khoury.northeastern.edu`
+
+(If you access the servers from multiple machines, you will need to do this on each machine you use.)
+
+
+
+### SSH from Khoury login servers
+
+You can access the Magi cluster from the Khoury login servers:
+
+`ssh viteklab@Magi-01`
+
+Please contact the Magi cluster maintainer for `viteklab` credentials.
+
+To enable X11 forwarding, use either:
+
+`ssh -X viteklab@Magi-01`
+
+or:
+
+`ssh -Y viteklab@Magi-01`
+
+Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
+
+
+### SSH from external network
+
+The `magi` command line utility sets up SSH tunneling for you to connect to the Magi cluster through the Khoury login servers.
+
+Use environment variables `$MAGI_USER` and `$MAGI_LOGIN` to set your Magi cluster username and Khoury login information.
+
+To connect to the head node:
+
+```
+magi run -H
+```
+
+To connect to another Magi node (e.g., `Magi-02`) from the head node:
+
+```
+magi run -02
+```
+
+To set up SSH key-based authentication on Magi servers (as shown above), you can use:
+
+```
+magi copy-id ~/.ssh/id_ed25519
+```
+
+
+
 ## Accessing data
 
 All Magi nodes have network access to the lab's research datasets.
@@ -128,6 +226,7 @@ This will show available `magidb` subcommands.
 Due to the small number of users, lab members use shared `viteklab` credentials to simplify cluster management.
 
 Please do not upload large datasets without permission. Home directory storage is intended for processed data and analysis results. Contact the Magi cluster maintainer to add datasets to the cluster's research data manifest.
+
 
 ### Magi user directories
 
@@ -154,6 +253,7 @@ Please give your subdirectories in `Projects` clear, descriptive names within th
 
 *For access to a node's local NVMe storage, use a standard library function for requesting a safe temporary directory, e.g., `tempfile.gettempdir()` in Python or `base::tempdir()` in R.*
 
+
 ### Copying files
 
 Files and directories can be copied from any Magi node to any host visible to the Khoury network, including the Discovery/Explorer cluster, using `rsync`.
@@ -172,9 +272,11 @@ magi download -x Scratch/test ~/Scratch/test-copy
 
 This will copy the `test` file to/from your `Scratch/` directory on Magi via the cluster's xfer node (`-x`).
 
+
 ### Best practices for files
 
 All lab members share the same home directory, so avoid cluttering the `~/Projects/` directory with too many projects. Use descriptive subdirectory names to clearly label research projects so they can be easily identified. Use the `~/Scratch` directory for any files that are not important or can be re-generated.
+
 
 
 ## Session management
@@ -226,7 +328,6 @@ You can view existing `tmux` sessions with:
 ```
 tmux ls
 ```
-
 
 ### Best practices for sessions
 
