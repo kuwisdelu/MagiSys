@@ -388,7 +388,7 @@ Environments can become quite large, so please try to re-use your environments a
 
 For shared projects, it is recommended to create a single `conda` environment to be used by multiple lab members.
 
-Please name your `conda` environments so their owner and purpose are clear to other users.
+Please name your `conda` environments so their purposes are clear to other users.
 
 
 
