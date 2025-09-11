@@ -94,80 +94,17 @@ magi run --help
 ```
 
 
-### SSH keys for Khoury servers
+### SSH from Khoury login servers
 
-The Magi servers can be accessed from the Khoury login servers at `login.khoury.northeastern.edu`. You must have a Khoury network account to connect using SSH:
+You must have a Khoury network account to connect using SSH:
 
 ```
 ssh <your-khoury-username>@login.khoury.northeastern.edu
 ```
 
-It is strongly recommended to set up SSH key-based authentication for the intermediate Khoury login servers.
-
-If you have not already set up SSH keys, this can be done with the following steps:
-
-#### 1. Generate a private key on your local machine:
-
-`ssh-keygen -t ed25519 -C "<your-email>@northeastern.edu"`
-
-Accepting the defaults is fine, but you can add an optional passphrase.
-
-#### 2. Start the ssh-agent in the background:
-
-`eval "$(ssh-agent -s)"`
-
-#### 3. Edit your configuration file:
-
-`vim ~/.ssh/config`
-
-On macOS, if you want to store the (optional) passphrase in your keychain:
-
-```
-Host *
-    UseKeychain yes
-    AddKeysToAgent yes
-    IdentityFile ~/.ssh/id_ed25519
-```
-
-Otherwise:
-
-```
-Host *
-    AddKeysToAgent yes
-    IdentityFile ~/.ssh/id_ed25519
-```
-
-You can also list specific hosts instead of `*`.
-
-#### 4. Add your private key to the ssh-agent:
-
-On macOS, if you used a passphrase, you can do:
-
-`ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
-
-Otherwise:
-
-`ssh-add ~/.ssh/id_ed25519`
-
-#### 5. Copy the public key from your local machine to the Khoury servers:
-
-`ssh-copy-id -i ~/.ssh/id_ed25519.pub <your-khoury-username>@login.khoury.northeastern.edu`
-
-You should now be able to access the Khoury servers using key-based authentication rather than using a password:
-
-`ssh <your-khoury-username>@login.khoury.northeastern.edu`
-
-(If you access the servers from multiple machines, you will need to do this on each machine you use.)
-
-
-
-### SSH from Khoury login servers
-
-You can access the Magi cluster from the Khoury login servers:
+You can then access the Magi cluster from the Khoury login servers:
 
 `ssh viteklab@Magi-01`
-
-Please contact the Magi cluster maintainer for `viteklab` credentials.
 
 To enable X11 forwarding, use either:
 
@@ -178,6 +115,8 @@ or:
 `ssh -Y viteklab@Magi-01`
 
 Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
+
+Contact the Magi cluster maintainer for `viteklab` credentials.
 
 
 ### SSH from external network
@@ -218,7 +157,33 @@ From a shell session on any Magi node, you can do:
 magidb --help
 ```
 
-This will show available `magidb` subcommands.
+The following subcommands are provided:
+
+- `magidb ls`
+    + list all datasets
+- `magidb ls-cache`
+    + list cached datasets
+- `magidb search`
+    + search all datasets
+- `magidb search-cache`
+    + search cached datasets
+- `magidb prune-cache`
+    + remove cached datasets
+- `magidb describe`
+    + describe a dataset
+- `magidb sync`
+    + sync a dataset to local cache
+- `magidb status`
+    + check cache versus manifest
+
+You can see positional arguments and options for subcommand with the `--help` or `-h` flags.
+
+For example:
+
+```
+msi search --help
+```
+
 
 
 ## File management
@@ -423,6 +388,67 @@ Environments can become quite large, so please try to re-use your environments a
 For shared projects, it is recommended to create a single `conda` environment to be used by multiple lab members.
 
 Please name your `conda` environments so their owner and purpose are clear to other users.
+
+
+
+## SSH key setup
+
+It is strongly recommended to set up SSH key-based authentication for the intermediate Khoury login servers.
+
+If you have not already set up SSH keys, this can be done with the following steps:
+
+### 1. Generate a private key on your local machine:
+
+`ssh-keygen -t ed25519 -C "<your-email>@northeastern.edu"`
+
+Accepting the defaults is fine, but you can add an optional passphrase.
+
+### 2. Start the ssh-agent in the background:
+
+`eval "$(ssh-agent -s)"`
+
+### 3. Edit your configuration file:
+
+`vim ~/.ssh/config`
+
+On macOS, if you want to store the (optional) passphrase in your keychain:
+
+```
+Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+Otherwise:
+
+```
+Host *
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+You can also list specific hosts instead of `*`.
+
+### 4. Add your private key to the ssh-agent:
+
+On macOS, if you used a passphrase, you can do:
+
+`ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
+
+Otherwise:
+
+`ssh-add ~/.ssh/id_ed25519`
+
+### 5. Copy the public key from your local machine to the Khoury servers:
+
+`ssh-copy-id -i ~/.ssh/id_ed25519.pub <your-khoury-username>@login.khoury.northeastern.edu`
+
+You should now be able to access the Khoury servers using key-based authentication rather than using a password:
+
+`ssh <your-khoury-username>@login.khoury.northeastern.edu`
+
+(If you access the servers from multiple machines, you will need to do this on each machine you use.)
 
 
 
