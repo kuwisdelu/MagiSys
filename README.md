@@ -11,6 +11,7 @@ Jump to a section:
 - [File management](#File-management)
 - [Session management](#Session-management)
 - [Software](#Software)
+- [SSH key setup](#SSH-key-setup)
 - [Magi versus Discovery](#Magi-versus-Discovery)
 
 ## Overview
