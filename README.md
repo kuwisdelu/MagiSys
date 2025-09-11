@@ -23,11 +23,9 @@ The data described in this repository is hosted on the Magi cluster. The Magi cl
 
 Currently, the following nodes are available to `viteklab` members:
 
-- `Magi-01` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
+- `Magi-01` : head node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
 
 - `Magi-02` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
-
-- `Magi-03` : data node (M2 Pro / 6 p-cores / 4 e-cores / 16 GB)
 
 Please contact the Magi cluster maintainer for `viteklab` credentials.
 
@@ -35,15 +33,15 @@ Please contact the Magi cluster maintainer for `viteklab` credentials.
 
 You can access the Magi cluster from the Khoury login servers:
 
-`ssh viteklab@Magi-02`
+`ssh viteklab@Magi-01`
 
 To enable X11 forwarding, use either:
 
-`ssh -X viteklab@Magi-02`
+`ssh -X viteklab@Magi-01`
 
 or:
 
-`ssh -Y viteklab@Magi-02`
+`ssh -Y viteklab@Magi-01`
 
 Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
 
@@ -57,21 +55,27 @@ To install the `magi` command line utility, run the following line in Terminal:
 /bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/kuwisdelu/MagiSys/HEAD/install/install.zsh)"
 ```
 
+This will install the following command line utilities:
+
+- `magi`: Connect to Magi cluster and transfer files
+- `magidb`: Search and download research datasets
+- `magisys`: Update or uninstall these utilities
+
 To update `magi`, run:
 
 ```
-eval "$MAGI_PREFIX/MagiSys/install/update.zsh"
+magisys update
 ```
 
 To uninstall `magi`, run:
 
 ```
-eval "$MAGI_PREFIX/MagiSys/install/uninstall.zsh"
+magisys uninstall
 ```
 
-Additionally, environment variables `$MAGI_USER` and `$MAGI_LOGIN` can be used to automatically set your Magi cluster username and Khoury login information.
+Environment variables `$MAGI_USER` and `$MAGI_LOGIN` can be used to automatically set your Magi cluster username and Khoury login information.
 
-For example, in your `.zshrc` or `.bashrc`:
+For example, in your `.zshrc`:
 
 ```
 export MAGI_USER=viteklab
@@ -106,80 +110,76 @@ magi run --help
 
 ## Accessing data
 
-All Magi nodes have network access to the datasets described in this repository.
+All Magi nodes have network access to the lab's research datasets.
 
-Please use the `msi` command line utility documented in `README.md` to manage the datasets.
+Please use the `magidb` command line utility to search experimental metadata and sync datasets to a node's local NVMe storage.
 
 From a shell session on any Magi node, you can do:
 
 ```
-msi --help
+magidb --help
 ```
 
-This will show available `msi` subcommands.
+This will show available `magidb` subcommands.
 
 
 ## File management
 
 Due to the small number of users, lab members use shared `viteklab` credentials to simplify cluster management.
 
-Please do not upload large datasets without permission. Home directory storage is intended for processed data and analysis results. Contact the Magi cluster maintainer to add datasets to the cluster's storage devices.
+Please do not upload large datasets without permission. Home directory storage is intended for processed data and analysis results. Contact the Magi cluster maintainer to add datasets to the cluster's research data manifest.
 
 ### Magi user directories
 
-The following directories are provided:
+The following network directories are provided:
 
 - `~/Datasets/`
-    + Includes `MSIResearch` repository and dataset manifest
-    + Includes locally cached MSI datasets
-    + Manage using `msi` command line utility
+    + Includes locally cached research datasets
+    + Manage using `magidb` command line utility
 
 - `~/Modules/`
     + Network storage for modules and environments
-    + Manage using `conda create -n`
+    + Manage using `conda create -n` and `conda env remove -n`
 
 - `~/Projects/`
-    + Network storage for projects
-    + Create subdirectories for your analyses
+    + Network storage for research projects
+    + Create subdirectories for each project
     + Stable storage that will not be removed without notification
 
 - `~/Scratch/`
-    + Local temporary storage for working files
-    + Create subdirectories for your scratch space
+    + Network temporary storage for working files
     + May be deleted without warning
 
 Please give your subdirectories in `Projects` clear, descriptive names within these directories.
 
+*For access to a node's local NVMe storage, use a standard library function for requesting a safe temporary directory, e.g., `tempfile.gettempdir()` in Python or `base::tempdir()` in R.*
+
 ### Copying files
 
-Files and directories can be copied from any Magi node to any host visible to the Khoury network, including the Discovery cluster, using command line programs `scp` or `rsync`.
+Files and directories can be copied from any Magi node to any host visible to the Khoury network, including the Discovery/Explorer cluster, using `rsync`.
 
 Copying files and directories to machines not visible to the Northeastern University network requires SSH tunneling.
 
-The files `scripts/magi-download` and `scripts/magi-upload` show an example of using SSH port forwarding to download or upload files to or from a personal computer.
-
-Alternatively, an easier method is to use the `magi` command line utility. This program will set up the SSH tunnel for you, copy files or directories using `rsync`, and close the connection automatically after the file transfer is done.
+The `magi` command line utility (see installation instructions earlier in this document) will set up the SSH tunnel for you, copy files or directories using `rsync`, and close the connection automatically after the file transfer is done.
 
 For example, on your personal computer:
 
 ```
 touch ~/Scratch/test
-magi upload -02 ~/Scratch/test Scratch/test
-magi download -02 Scratch/test ~/Scratch/test-copy
+magi upload -x ~/Scratch/test Scratch/test
+magi download -x Scratch/test ~/Scratch/test-copy
 ```
 
-This will copy the `test` file to/from the `viteklab/Scratch/` directory on `Magi-02`.
+This will copy the `test` file to/from your `Scratch/` directory on Magi via the cluster's xfer node (`-x`).
 
 ### Best practices for files
 
-It is recommended to create a subdirectory with your name in `~/Projects` and `~/Scratch` for your own usage.
-
-Additional subdirectories can be created for projects shared between multiple lab members.
+All lab members share the same home directory, so avoid cluttering the `~/Projects/` directory with too many projects. Use descriptive subdirectory names to clearly label research projects so they can be easily identified. Use the `~/Scratch` directory for any files that are not important or can be re-generated.
 
 
 ## Session management
 
-To manage remote sessions, you can either use `tmux` on the Khoury login servers or `screen` on a Magi compute node.
+To manage remote sessions, you can use `tmux` on either the Khoury login servers or on a Magi node directly.
 
 Please be mindful of shared system resources. When running parallel jobs, please use as few workers as you need so that cores are available for other users.
 
@@ -192,7 +192,7 @@ For example, you can do:
 
 ```
 tmux
-ssh viteklab@Magi-02
+ssh viteklab@Magi-01
 ```
 
 You can then do `C-b d` to detach the `tmux` session while still connected to the Magi node with your process running.
@@ -202,6 +202,12 @@ To continue the session, do:
 ```
 tmux attach
 ```
+
+### Using `tmux` on Magi nodes
+
+Alternatively, you can use `tmux` on a Magi node directly.
+
+Because `tmux` sessions will be accessible to other `viteklab` members, it is important to name your sessions.
 
 To create a named session, you can do:
 
@@ -221,35 +227,10 @@ You can view existing `tmux` sessions with:
 tmux ls
 ```
 
-### Using `screen` on Magi nodes
-
-Alternatively, you can use `screen` on a Magi node directly.
-
-Because `screen` sessions will be accessible to other `viteklab` members, it is important to name your sessions.
-
-Please use the `-S` option to give a descriptive name to your `screen` sessions, e.g., your name:
-
-```
-screen -S yourname
-```
-
-You can then do `C-a d` to detach the `screen` session with your process running.
-
-To continue the session, do:
-
-```
-screen -r yourname
-```
-
-You can view existing `screen` sessions with:
-
-```
-screen -ls
-```
 
 ### Best practices for sessions
 
-Please name any `screen` or `tmux` sessions on Magi nodes with your name and/or description.
+Please name any sessions on Magi nodes with your name and/or description.
 
 *Your sessions can be attached by other `viteklab` members.*
 
@@ -259,33 +240,16 @@ This is useful for sharing an ongoing task among lab members, but please be care
 
 ## Software
 
-The default software is listed in `manifest.md`.
-
 If you need *specific versions* of packages, please create a virtual environment using `conda create` (for multiple dependencies), `venv` (for Python packages), or `renv` (for R packages) and install packages into the virtual environment.
 
 If you need additional software or dependencies that require administrator privileges to install, please contact the Magi cluster maintainer.
 
-### R/Bioconductor
-
-The system R will be kept up-to-date with Bioc-devel, including the Bioc-devel versions of `Cardinal` and `matter`.
-
-The system R is aliased as `R="R --no-save"`.
-
-If you need the release version of Bioconductor or earlier, please use `renv` or `conda create`.
-
-### Python
-
-The system Python will be kept up-to-date with the most recent release that is compatible with both `pytorch-nightly` with `mps` device and `tensorflow-metal`.
-
-The system Python is aliased as `python=python3` and `pip=pip3`.
-
-Additional Python interpreters are available through `conda create`.
 
 ### Conda
 
 Miniforge is installed to provide package management and environments with `conda`.
 
-While the system R and Python are set up to provide a useful out-of-the-box scientific computing environment, more specific environment needs are best handled using `conda`.
+While the system R and Python are available for ad-hoc scripts, more specific environment needs are best handled using `conda`.
 
 Create a `conda` environment if you need to install project-specific dependencies.
 
@@ -343,6 +307,7 @@ brew list
 Homebrew packages require administrator permission to install.
 
 Please contact the Magi cluster maintainer if you need additional system dependencies installed.
+
 
 ### Best practices for software
 

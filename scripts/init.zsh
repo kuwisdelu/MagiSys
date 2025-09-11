@@ -1,5 +1,9 @@
 #!/bin/zsh
 
+# 
+# setup utility functions
+# 
+
 askYesNo() {
 	while true; do
 		if [[ -n $1 ]]
@@ -21,6 +25,10 @@ askYesNo() {
 		fi
 	done
 }
+
+# 
+# setup user's home directory
+# 
 
 echo "Initializing home directory for $USER"
 echo "This command should only be run on a Magi node"
