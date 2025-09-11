@@ -138,12 +138,6 @@ To connect to another Magi node (e.g., `Magi-02`) from the head node:
 magi run -02
 ```
 
-To set up SSH key-based authentication on Magi servers (as shown above), you can use:
-
-```
-magi copy-id ~/.ssh/id_ed25519
-```
-
 
 
 ## Accessing data
@@ -450,6 +444,14 @@ You should now be able to access the Khoury servers using key-based authenticati
 `ssh <your-khoury-username>@login.khoury.northeastern.edu`
 
 (If you access the servers from multiple machines, you will need to do this on each machine you use.)
+
+### 6. Copy the public key from your local machine to the Magi servers:
+
+To set up SSH key-based authentication on Magi servers, you can use:
+
+```
+magi copy-id ~/.ssh/id_ed25519
+```
 
 
 
