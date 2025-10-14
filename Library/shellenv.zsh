@@ -29,7 +29,15 @@ magidb() {
 magisys() {
 	if [[ $1 = "update" ]]
 	then
-		zsh "$MAGI_PREFIX/MagiSys/install/update.zsh"
+		MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
+		if [[ ! -d "$MAGI_SYSPATH" ]]
+		then
+			echo "error: no installation found at $MAGI_SYSPATH"
+			exit
+		fi
+		echo "Updating Magi system repository $MAGI_SYSPATH"
+		git -C "$MAGI_SYSPATH" pull origin main --quiet
+		zsh "$MAGI_SYSPATH/install/update.zsh"
 	
 	elif [[ $1 = "uninstall" ]]
 	then
