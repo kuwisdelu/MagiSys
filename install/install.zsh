@@ -162,6 +162,10 @@ then
 		mkdir -p "${MAGI_DBPATH}"
 	fi
 
+else
+
+	echo "Updating existing installation at ${MAGI_PREFIX}"
+
 fi
 
 # 
