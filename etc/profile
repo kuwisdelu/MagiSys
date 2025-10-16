@@ -1,5 +1,13 @@
-# Magi aliases and exports
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# MagiSys
+source "/Volumes/MagiSys/shellenv.zsh"
+
+# Aliases
 alias R="R --no-save --no-restore"
 alias python=python3
 alias pip="python3 -m pip"
+
+# Nice to have
 export CLICOLOR=1

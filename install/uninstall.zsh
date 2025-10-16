@@ -4,20 +4,26 @@
 # get installation locations
 # 
 
-if [[ ! -n "$MAGI_PREFIX" ]]
+if [[ ! -n "${MAGI_PREFIX}" ]]
 then
 	echo "error: \$MAGI_PREFIX not set"
 	exit
 fi
 
-if [[ ! -n "$MAGI_DBPATH" ]]
+if [[ ! -n "${MAGI_DBPATH}" ]]
 then
 	echo "error: \$MAGI_DBPATH not set"
 	exit
 fi
 
-MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/activate.zsh"
+MAGI_REPO="${MAGI_PREFIX}/MagiSys"
+MAGI_SHELL="${MAGI_PREFIX}/shellenv.zsh"
+
+if [[ ! -d ${MAGI_REPO} ]]
+then
+	echo "error: no installation found at ${MAGI_REPO}"
+	exit
+fi
 
 # 
 # setup utility functions
@@ -49,28 +55,22 @@ askYesNo() {
 # ask user permission to uninstall Magi system
 # 
 
-if [[ ! -d $MAGI_SYSPATH ]]
-then
-	echo "error: no installation found at $MAGI_SYSPATH"
-	exit
-fi
-
 echo "This script will uninstall:"
-echo "$MAGI_SYSENV"
-echo "$MAGI_SYSPATH/"
+echo "${MAGI_REPO}/"
+echo "${MAGI_SHELL}"
 
 if [[ $(askYesNo) == "y" ]]
 then
 	echo
-	if [[ -f "$MAGI_SYSENV" ]]
+	if [[ -f "${MAGI_SHELL}" ]]
 	then
-		rm "$MAGI_SYSENV"
-		echo "Removed $MAGI_SYSENV"
+		rm "${MAGI_SHELL}"
+		echo "Removed ${MAGI_SHELL}"
 	fi
-	if [[ -d "$MAGI_SYSPATH" ]]
+	if [[ -d "${MAGI_REPO}" ]]
 	then
-		rm -rf "$MAGI_SYSPATH"
-		echo "Removed $MAGI_SYSPATH"
+		rm -rf "${MAGI_REPO}"
+		echo "Removed ${MAGI_REPO}"
 	fi
 	echo
 else
@@ -80,15 +80,15 @@ fi
 # ask user permission to uninstall Magi data
 
 echo "This script now uninstall:"
-echo "$MAGI_DBPATH/"
+echo "${MAGI_DBPATH}/"
 
 if [[ $(askYesNo) == "y" ]]
 then
 	echo
-	if [[ -d "$MAGI_DBPATH" ]]
+	if [[ -d "${MAGI_DBPATH}" ]]
 	then
-		rm -rf "$MAGI_DBPATH"
-		echo "Removed $MAGI_DBPATH"
+		rm -rf "${MAGI_DBPATH}"
+		echo "Removed ${MAGI_DBPATH}"
 	fi
 	echo
 fi

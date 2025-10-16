@@ -4,7 +4,7 @@
 # get installation locations
 # 
 
-if [[ ! -n "$MAGI_PREFIX" ]]
+if [[ ! -n "${MAGI_PREFIX}" ]]
 then
 	if [[ -d "/Volumes/MagiSys" ]]
 	then
@@ -14,18 +14,13 @@ then
 	fi
 fi
 
-if [[ ! -n "$MAGI_DBPATH" ]]
+if [[ ! -n "${MAGI_DBPATH}" ]]
 then
-	export MAGI_DBPATH="$MAGI_PREFIX/Datasets"
+	export MAGI_DBPATH="${MAGI_PREFIX}/Datasets"
 fi
 
-if [[ ! -n "$MAGI_DBNAME" ]]
-then
-	export MAGI_DBNAME="MSI"
-fi
-
-MAGI_SYSPATH="$MAGI_PREFIX/MagiSys"
-MAGI_SYSENV="$MAGI_PREFIX/activate.zsh"
+MAGI_REPO="${MAGI_PREFIX}/MagiSys"
+MAGI_SHELL="${MAGI_PREFIX}/shellenv.zsh"
 
 # 
 # setup utility functions
@@ -54,20 +49,20 @@ askYesNo() {
 }
 
 installDataManifest() {
-	if [[ ! -d "$MAGI_DBPATH/$1" ]]
+	if [[ ! -d "${MAGI_DBPATH}/$1" ]]
 	then
-		if [[ -f "$MAGI_DBPATH/$1" ]]
+		if [[ -f "${MAGI_DBPATH}/$1" ]]
 		then
-			echo "$MAGI_DBPATH/$1 will be overwritten"
+			echo "${MAGI_DBPATH}/$1 will be overwritten"
 			if [[ $(askYesNo) == "n" ]]
 			then
 				return
 			fi
-			rm "$MAGI_DBPATH/$1"
+			rm "${MAGI_DBPATH}/$1"
 		fi
-		mkdir -p "$MAGI_DBPATH/$1"
+		mkdir -p "${MAGI_DBPATH}/$1"
 	fi
-	MANIFEST_FILE="$MAGI_DBPATH/$1/manifest.toml"
+	MANIFEST_FILE="${MAGI_DBPATH}/$1/manifest.toml"
 	if [[ -e "$MANIFEST_FILE" ]]
 	then
 		rm "$MANIFEST_FILE"
@@ -82,138 +77,157 @@ installDataManifest() {
 	fi
 }
 
-installMagiEnv() {
-	if [[ -e "$1" ]]
-	then
-		echo "Removing old environment $1"
-	fi
-	cat "$MAGI_PREFIX/MagiSys/Library/shellenv.zsh" > $1
-	echo "" >> $1
-	cat "$MAGI_PREFIX/MagiSys/etc/profile" >> $1
-	echo "export MAGI_PREFIX='$MAGI_PREFIX'" >> $1
-	echo "export MAGI_DBPATH='$MAGI_DBPATH'" >> $1
-	echo "export MAGI_DBNAME='$MAGI_DBNAME'" >> $1
-	echo "Installed environment $1"
-}
-
 # 
-# ask user permission to install
+# check if already installed
 # 
 
-echo "This script will install:"
-echo "$MAGI_PREFIX/"
-echo "$MAGI_SYSENV"
-echo "$MAGI_SYSPATH/"
-echo "$MAGI_DBPATH/"
-if [[ -d "$MAGI_DBPATH" ]]
+if [[ -d "${MAGI_REPO}" ]]
 then
-	echo "Existing data in $MAGI_DBPATH/ will be preserved"
-fi
-
-if [[ $(askYesNo) == "n" ]]
-then
-	exit
+	IS_FRESH_INSTALL=0
 else
-	echo
+	IS_FRESH_INSTALL=1
 fi
 
 # 
-# install Magi prefix
+# fresh install
 # 
 
-if [[ ! -d "$MAGI_PREFIX" ]]
+if [[ $IS_FRESH_INSTALL = 1 ]]
 then
-	echo "Creating $MAGI_PREFIX"
-	if [[ -f "$MAGI_PREFIX" ]]
+
+	# 
+	# ask user permission to install
+	# 
+
+	echo "This script will install:"
+	echo "${MAGI_PREFIX}/"
+	echo "${MAGI_DBPATH}/"
+	echo "${MAGI_REPO}/"
+	echo "${MAGI_SHELL}"
+	if [[ -d "${MAGI_DBPATH}" ]]
 	then
-		echo "$MAGI_PREFIX will be overwritten"
-		if [[ $(askYesNo) == "n" ]]
-		then
-			exit
-		fi
-		rm -rf "$MAGI_PREFIX"
+		echo "Existing data in ${MAGI_DBPATH}/ will be preserved"
 	fi
-	mkdir -p "$MAGI_PREFIX"
-fi
 
-# 
-# install Magi system repository
-# 
-
-echo "Installing Magi system"
-
-if [[ -e "$MAGI_SYSPATH" ]]
-then
-	echo "$MAGI_SYSPATH will be overwritten"
 	if [[ $(askYesNo) == "n" ]]
 	then
 		exit
+	else
+		echo
 	fi
-	rm -rf "$MAGI_SYSPATH"
+
+	# 
+	# install Magi prefix
+	# 
+
+	if [[ ! -d "${MAGI_PREFIX}" ]]
+	then
+		echo "Creating ${MAGI_PREFIX}"
+		if [[ -f "${MAGI_PREFIX}" ]]
+		then
+			echo "file ${MAGI_PREFIX} will be overwritten"
+			if [[ $(askYesNo) == "n" ]]
+			then
+				exit
+			fi
+			rm "${MAGI_PREFIX}"
+		fi
+		mkdir -p "${MAGI_PREFIX}"
+	fi
+
+	# 
+	# install Magi system repository
+	# 
+
+	echo "Cloning Magi system repository ${MAGI_REPO}"
+	git -C "${MAGI_PREFIX}" clone https://github.com/kuwisdelu/MagiSys.git --quiet
+
+	# 
+	# install Magi data directory
+	# 
+
+	echo "Creating Magi data directory"
+
+	if [[ ! -d "${MAGI_DBPATH}" ]]
+	then
+		if [[ -f "${MAGI_DBPATH}" ]]
+		then
+			echo "file ${MAGI_DBPATH} will be overwritten"
+			if [[ $(askYesNo) == "n" ]]
+			then
+				exit
+			fi
+			rm "${MAGI_DBPATH}"
+		fi
+		mkdir -p "${MAGI_DBPATH}"
+	fi
+
 fi
 
-echo "Cloning Magi system repository $MAGI_SYSPATH"
-git -C "$MAGI_PREFIX" clone https://github.com/kuwisdelu/MagiSys.git --quiet
+# 
+# install badwulf
+# 
 
-MAGI_VENV="$MAGI_SYSPATH/venv"
-MAGI_PYTHON="$MAGI_VENV/bin/python3"
+MAGI_PYTHON_ENV="${MAGI_REPO}/venv"
+MAGI_PYTHON_BIN="${MAGI_PYTHON_ENV}/bin/python3"
 
-echo "Creating virtual environment at $MAGI_VENV"
-eval /usr/bin/env python3 -m venv "$MAGI_VENV"
+if [[ ! -d "${MAGI_PYTHON_ENV}" ]]
+then
+	echo "Creating virtual environment at ${MAGI_PYTHON_ENV}"
+	eval /usr/bin/env python3 -m venv "${MAGI_PYTHON_ENV}"
+fi
 
 echo "Installing badwulf in virtual environment"
-eval "$MAGI_PYTHON" -m pip install pip --upgrade --quiet
-eval "$MAGI_PYTHON" -m pip install badwulf  --upgrade --quiet
-
-installMagiEnv $MAGI_SYSENV
+eval "${MAGI_PYTHON_BIN}" -m pip install pip --upgrade --quiet
+eval "${MAGI_PYTHON_BIN}" -m pip install badwulf  --upgrade --quiet
 
 # 
-# install Magi research data
+# install shell environment
 # 
 
-echo "Installing Magi research data manifests"
-
-if [[ ! -d "$MAGI_DBPATH" ]]
+if [[ -e "${MAGI_SHELL}" ]]
 then
-	if [[ -f "$MAGI_DBPATH" ]]
-	then
-		echo "$MAGI_DBPATH will be overwritten"
-		if [[ $(askYesNo) == "n" ]]
-		then
-			exit
-		fi
-		rm -rf "$MAGI_DBPATH"
-	fi
-	mkdir -p "$MAGI_DBPATH"
+	echo "Removing old shell environment ${MAGI_SHELL}"
 fi
+cp -vf "${MAGI_PREFIX}/MagiSys/Library/shellenv.zsh" "${MAGI_SHELL}"
+echo "Installed shell environment ${MAGI_SHELL}"
 
-echo "Downloading data manifests to $MAGI_DBPATH"
+# 
+# install Magi data manifests
+# 
 
-MAGI_DBREPO=https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD
-curl -fsSL "$MAGI_DBREPO/README.md" > "$MAGI_DBPATH/README.md"
-installDataManifest MSI "$MAGI_DBREPO/manifest.toml"
+echo "Installing research data manifests to ${MAGI_DBPATH}"
+
+MAGI_DBHEAD=https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD
+curl -fsSL "${MAGI_DBHEAD}/README.md" > "${MAGI_DBPATH}/README.md"
+
+installDataManifest MSI "${MAGI_DBHEAD}/manifest.toml"
 
 # 
 # complete installation
 # 
 
-MAGI_INIT=""
-MAGI_INIT="$MAGI_INIT\n# >>> Magi initialization <<<"
-MAGI_INIT="$MAGI_INIT\nsource '$MAGI_SYSENV'"
-MAGI_INIT="$MAGI_INIT\n# <<< Magi initialization <<<"
-
-echo
-echo "Finished moving files into place"
-echo "To complete installation, the following will be appended to your ~/.zshrc:"
-echo $MAGI_INIT
-echo
-
-if [[ $(askYesNo) == "y" ]]
+if [[ $IS_FRESH_INSTALL = 1 ]]
 then
-	echo $MAGI_INIT >> ~/.zshrc
+	MAGI_INIT=""
+	MAGI_INIT="${MAGI_INIT}\n# >>> Magi initialization <<<"
+	MAGI_INIT="${MAGI_INIT}\nsource '${MAGI_SHELL}'"
+	MAGI_INIT="${MAGI_INIT}\n# <<< Magi initialization <<<"
+
+	echo
+	echo "Finished moving files into place"
+	echo "To complete installation, the following will be appended to your ~/.zshrc:"
+	echo ${MAGI_INIT}
+	echo
+
+	if [[ $(askYesNo) == "y" ]]
+	then
+		echo ${MAGI_INIT} >> ~/.zshrc
+	fi
+
+	echo "Finished installing"
+	echo "You may need to restart your shell for changes to take effect"
+else
+	echo "Finished updating"
+	echo "You may need to restart your shell for changes to take effect"
 fi
-
-source "$MAGI_SYSENV"
-
-echo "Finished installing"
-echo "You may need to restart your shell for changes to take effect"
