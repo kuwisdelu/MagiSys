@@ -35,6 +35,9 @@ echo "This command should only be run on a Magi node"
 
 if [[ $(askYesNo) == "y" ]]
 then
+	echo "Updating zprofile"
+	cp -vf "$MAGI_PREFIX/MagiSys/etc/profile" ~/.zprofile
+
 	echo "Updating conda configuration"
 	cp -vf "$MAGI_PREFIX/MagiSys/etc/condarc" ~/.condarc
 
