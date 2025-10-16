@@ -55,7 +55,7 @@ magisys() {
 		fi
 		echo "Updating Magi system repository ${MAGI_REPO}"
 		git -C "${MAGI_REPO}" pull origin main --quiet
-		zsh "${MAGI_REPO}/install/update.zsh"
+		zsh "${MAGI_REPO}/install/install.zsh"
 	
 	elif [[ $1 = "uninstall" ]]
 	then
