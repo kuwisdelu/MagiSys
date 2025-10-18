@@ -47,15 +47,7 @@ magidb() {
 magisys() {
 	if [[ $1 = "update" ]]
 	then
-		MAGI_REPO="${MAGI_PREFIX}/MagiSys"
-		if [[ ! -d "${MAGI_REPO}" ]]
-		then
-			echo "error: no installation found at ${MAGI_REPO}"
-			exit
-		fi
-		echo "Updating Magi system repository ${MAGI_REPO}"
-		git -C "${MAGI_REPO}" pull origin main --quiet
-		zsh "${MAGI_REPO}/install/install.zsh"
+		zsh -c "$(curl -fsSL https://raw.githubusercontent.com/kuwisdelu/MagiSys/HEAD/install/install.zsh)"
 	
 	elif [[ $1 = "uninstall" ]]
 	then

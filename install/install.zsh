@@ -4,7 +4,7 @@
 # get installation locations
 # 
 
-if [[ ! -n "${MAGI_PREFIX}" ]]
+if [[ -z "${MAGI_PREFIX}" ]]
 then
 	if [[ -d "/Volumes/MagiSys" ]]
 	then
@@ -14,7 +14,7 @@ then
 	fi
 fi
 
-if [[ ! -n "${MAGI_DBPATH}" ]]
+if [[ -z "${MAGI_DBPATH}" ]]
 then
 	export MAGI_DBPATH="${MAGI_PREFIX}/Datasets"
 fi
@@ -81,7 +81,7 @@ installDataManifest() {
 # check if already installed
 # 
 
-if [[ -d "${MAGI_REPO}" ]]
+if [[ -d "${MAGI_REPO}/.git" ]]
 then
 	IS_FRESH_INSTALL=0
 else
@@ -162,9 +162,15 @@ then
 		mkdir -p "${MAGI_DBPATH}"
 	fi
 
+# 
+# upgrade install
+# 
+
 else
 
-	echo "Updating existing installation at ${MAGI_PREFIX}"
+	echo "Detected existing installation at ${MAGI_PREFIX}"
+	echo "Updating Magi system repository ${MAGI_REPO}"
+	git -C "${MAGI_REPO}" pull origin main --quiet
 
 fi
 
@@ -220,7 +226,7 @@ then
 
 	echo
 	echo "Finished moving files into place"
-	echo "To complete installation, the following will be appended to your ~/.zshrc:"
+	echo "To use the installation, the following will be appended to your ~/.zshrc:"
 	echo ${MAGI_INIT}
 	echo
 
