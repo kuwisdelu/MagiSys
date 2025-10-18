@@ -187,7 +187,7 @@ then
 	eval /usr/bin/env python3 -m venv "${MAGI_PYTHON_ENV}"
 fi
 
-echo "Installing badwulf in virtual environment"
+echo "Installing badwulf in ${MAGI_PYTHON_ENV}"
 eval "${MAGI_PYTHON_BIN}" -m pip install pip --upgrade --quiet
 eval "${MAGI_PYTHON_BIN}" -m pip install badwulf  --upgrade --quiet
 
