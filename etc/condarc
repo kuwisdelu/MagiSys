@@ -1,6 +1,0 @@
-auto_activate_base: false
-pkgs_dirs:
-    - ~/Modules/conda_pkgs
-envs_dirs:
-    - ~/Modules/conda_envs
-env_prompt: '({name}) '

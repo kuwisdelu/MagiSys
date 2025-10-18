@@ -1,0 +1,13 @@
+# conda
+CONDA_DIR="${HOME}/Modules/conda"
+export CONDA_AUTO_ACTIVATE_BASE=false
+export CONDA_ENVS_DIRS="${CONDA_DIR}/envs"
+export CONDA_PKGS_DIRS="${CONDA_DIR}/pkgs"
+
+# uv
+UV_DIR="${HOME}/Modules/uv"
+export UV_CACHE_DIR="${UV_DIR}/cache"
+export UV_PYTHON_INSTALL_DIR="${UV_DIR}/python/versions"
+export UV_PYTHON_BIN_DIR="${UV_DIR}/python/bin"
+export UV_TOOL_DIR="${UV_DIR}/tools"
+export UV_TOOL_BIN_DIR="${UV_DIR}/tools/bin"

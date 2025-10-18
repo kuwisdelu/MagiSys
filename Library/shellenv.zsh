@@ -55,7 +55,7 @@ magisys() {
 	
 	elif [[ $1 = "init" ]]
 	then
-		zsh "${MAGI_PREFIX}/MagiSys/scripts/init.zsh"
+		zsh "${MAGI_PREFIX}/MagiSys/scripts/init-user.zsh"
 	
 	elif [[ -n $1 ]]
 	then

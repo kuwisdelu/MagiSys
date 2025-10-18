@@ -10,7 +10,7 @@ then
 	then
 		export MAGI_PREFIX="/Volumes/MagiSys"
 	else
-		export MAGI_PREFIX=~/.MagiSys
+		export MAGI_PREFIX="${HOME}/.MagiSys"
 	fi
 fi
 
@@ -83,16 +83,16 @@ installDataManifest() {
 
 if [[ -d "${MAGI_REPO}/.git" ]]
 then
-	IS_FRESH_INSTALL=0
+	IS_FRESH_INSTALL=false
 else
-	IS_FRESH_INSTALL=1
+	IS_FRESH_INSTALL=true
 fi
 
 # 
 # fresh install
 # 
 
-if [[ $IS_FRESH_INSTALL = 1 ]]
+if [[ $IS_FRESH_INSTALL = true ]]
 then
 
 	# 
@@ -208,16 +208,16 @@ echo "Installed shell environment ${MAGI_SHELL}"
 
 echo "Installing research data manifests to ${MAGI_DBPATH}"
 
-MAGI_DBHEAD=https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD
-curl -fsSL "${MAGI_DBHEAD}/README.md" > "${MAGI_DBPATH}/README.md"
+MAGI_DBURL=https://raw.githubusercontent.com/kuwisdelu/MSIResearch/HEAD
+curl -fsSL "${MAGI_DBURL}/README.md" > "${MAGI_DBPATH}/README.md"
 
-installDataManifest MSI "${MAGI_DBHEAD}/manifest.toml"
+installDataManifest MSI "${MAGI_DBURL}/manifest.toml"
 
 # 
 # complete installation
 # 
 
-if [[ $IS_FRESH_INSTALL = 1 ]]
+if [[ $IS_FRESH_INSTALL = true ]]
 then
 	MAGI_INIT=""
 	MAGI_INIT="${MAGI_INIT}\n# >>> Magi initialization <<<"
@@ -232,7 +232,7 @@ then
 
 	if [[ $(askYesNo) == "y" ]]
 	then
-		echo ${MAGI_INIT} >> ~/.zshrc
+		echo ${MAGI_INIT} >> "${HOME}/.zshrc"
 	fi
 
 	echo "Finished installing"
