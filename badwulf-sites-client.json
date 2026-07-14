@@ -1,0 +1,60 @@
+{
+	"local": {
+		"user": "",
+		"paths": {
+			"default": "$BADWULF_PREFIX"
+		}
+	},
+	"magi": {
+		"user": "$MAGI_USER",
+		"paths": {
+			"default": "/Volumes/Local/Data/"
+		},
+		"hosts": {
+			"01": "Magi-01",
+			"02": "Magi-02"
+		},
+		"proxy": {
+			"user": "$KHOURY_USER",
+			"host": "login.khoury.northeastern.edu"
+		}
+	},
+	"primary": {
+		"user": "$MAGI_USER",
+		"paths": {
+			"default": "/Volumes/Primary/Data/"
+		},
+		"hosts": {
+			"default": "Magi-01"
+		},
+		"proxy": {
+			"user": "$KHOURY_USER",
+			"host": "login.khoury.northeastern.edu"
+		}
+	},
+	"secondary": {
+		"user": "$MAGI_USER",
+		"paths": {
+			"default": "/Volumes/Secondary/Data/"
+		},
+		"hosts": {
+			"default": "Magi-02"
+		},
+		"proxy": {
+			"user": "$KHOURY_USER",
+			"host": "login.khoury.northeastern.edu"
+		}
+	},
+	"explorer":
+	{
+		"user": "$EXPLORER_USER",
+		"hosts": {
+			"head": "login.explorer.northeastern.edu",
+			"xfer": "xfer.discovery.neu.edu"
+		},
+		"paths": {
+			"default": "/work/MSIResearch/Projects"
+		}
+	}
+}
+

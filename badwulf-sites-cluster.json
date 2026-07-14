@@ -1,0 +1,39 @@
+{
+	"local": {
+		"user": "$USER",
+		"paths": {
+			"default": "/Volumes/Local/Data/",
+			"external": "$HOME/External"
+		}
+	},
+	"primary": {
+		"user": "$USER",
+		"paths": {
+			"default": "/Volumes/Primary/Data/"
+		},
+		"hosts": {
+			"default": "Magi-01.local"
+		}
+	},
+	"secondary": {
+		"user": "$USER",
+		"paths": {
+			"default": "/Volumes/Secondary/Data/"
+		},
+		"hosts": {
+			"default": "Magi-02.local"
+		}
+	},
+	"explorer":
+	{
+		"user": "$EXPLORER_USER",
+		"hosts": {
+			"head": "login.explorer.northeastern.edu",
+			"xfer": "xfer.discovery.neu.edu"
+		},
+		"paths": {
+			"default": "/work/MSIResearch/Data"
+		}
+	}
+}
+
