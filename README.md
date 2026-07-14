@@ -11,7 +11,6 @@ Jump to a section:
 - [File management](#File-management)
 - [Session management](#Session-management)
 - [Software](#Software)
-- [SSH key setup](#SSH-key-setup)
 - [Magi versus Discovery](#Magi-versus-Discovery)
 
 ## Overview
@@ -24,125 +23,60 @@ The data described in this repository is hosted on the Magi cluster. The Magi cl
 
 Currently, the following nodes are available to `viteklab` members:
 
-- `Magi-01` : head node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
+- `Magi-01` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
 
 - `Magi-02` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
 
 Please contact the Magi cluster maintainer for `viteklab` credentials.
 
 
+### SSH setup
+
+It is strongly recommended to set up SSH key-based authentication for the intermediate Khoury login servers.
+
+If you have not already set up SSH keys, this can be done with the following steps:
+
+#### 1. Generate a private key on your local machine:
+
+Check if you already have a key:
+
+`ls ~/.ssh`
+
+If you see a pair of "id" files with one of them ending in ".pub" (e.g., "id_ed25519" and "id_ed25519.pub"), then you can skip this step.
+
+If you don't already have a key, create one:
+
+`ssh-keygen -C "<your-name>@<host-name>"`
+
+Accept the defaults. The comment (`-C`) helps identify which key is associated with which user and their origin.
+
+#### 2. Copy the public key from your local machine to the Khoury servers:
+
+Replace `<khoury-user>` with your username on the Khoury login servers:
+
+`ssh-copy-id <khoury-user>@login.khoury.northeastern.edu`
+
+You should now be able to access the Khoury servers using key-based authentication rather than using a password:
+
+`ssh <khoury-user>@login.khoury.northeastern.edu`
+
+(If you access the servers from multiple machines, you will need to do this on each machine you use.)
+
+#### 3. Copy the public key from your local machine to the Magi servers:
+
+Replace `<magi-user>` with your username on the Magi cluser:
+
+`ssh-copy-id -o JumpyProxy=<khoury-user>@login.khoury.northeastern.edu <magi-user>@Magi-01`
+
+You should now be able to access the Khoury servers using key-based authentication rather than using a password:
+
+`ssh -J <khoury-user>@login.khoury.northeastern.edu <magi-user>@Magi-01`
+
+(Repeat this process with Magi-02, etc., if desired.)
+
+
 ### Installation
 
-
-The `magi` command line utility provides functionality for accessing the Magi cluster from an external network. It assumes you are running in a UNIX-alike environment that includes `ssh` and `rsync` command line programs.
-
-To install the `magi` command line utility, run the following line in Terminal:
-
-```
-/bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/kuwisdelu/MagiSys/HEAD/install/install.zsh)"
-```
-
-This will install the following command line utilities:
-
-- `magi`: Connect to Magi cluster and transfer files
-- `magidb`: Search and download research datasets
-- `magisys`: Update or uninstall these utilities
-
-To update `magi`, run:
-
-```
-magisys update
-```
-
-To uninstall `magi`, run:
-
-```
-magisys uninstall
-```
-
-Environment variables `$MAGI_USER` and `$MAGI_LOGIN` can be used to automatically set your Magi cluster username and Khoury login information.
-
-For example, in your `.zshrc`:
-
-```
-export MAGI_USER=viteklab
-export MAGI_LOGIN=<your-khoury-username>
-```
-
-You can then see the command help with:
-
-```
-magi --help
-```
-
-The following subcommands are provided:
-
-- `magi run`
-    + run a command (e.g., login shell) on a Magi node
-- `magi copy-id`
-    + copy SSH key to a Magi node
-- `magi download`
-    + download file(s) from a Magi node
-- `magi upload`
-    + upload file(s) to a Magi node
-
-You can see positional arguments and options for subcommand with the `--help` or `-h` flags.
-
-For example:
-
-```
-magi run --help
-```
-
-
-### SSH from Khoury login servers
-
-You must have a Khoury network account to connect using SSH:
-
-```
-ssh <your-khoury-username>@login.khoury.northeastern.edu
-```
-
-You can then access the Magi cluster from the Khoury login servers:
-
-```
-ssh viteklab@Magi-01
-```
-
-To enable X11 forwarding, use either:
-
-```
-ssh -X viteklab@Magi-01
-```
-
-or:
-
-```
-ssh -Y viteklab@Magi-01
-```
-
-Note that X11 forwarding *must* have been requested when connecting to the Khoury login servers or this will not work.
-
-Contact the Magi cluster maintainer for `viteklab` credentials.
-
-
-### SSH from external network
-
-The `magi` command line utility sets up SSH tunneling for you to connect to the Magi cluster through the Khoury login servers.
-
-Use environment variables `$MAGI_USER` and `$MAGI_LOGIN` to set your Magi cluster username and Khoury login information.
-
-To connect to the head node:
-
-```
-magi run -H
-```
-
-To connect to another Magi node (e.g., `Magi-02`) from the head node:
-
-```
-magi run -02
-```
 
 
 
@@ -275,18 +209,18 @@ tmux attach
 
 Alternatively, you can use `tmux` on a Magi node directly.
 
-Because `tmux` sessions will be accessible to other `viteklab` members, it is important to name your sessions.
+If you are using shared `viteklab` credentials, your `tmux` sessions will be accessible to other lab members, so it is important to name your sessions.
 
 To create a named session, you can do:
 
 ```
-tmux new -s yourname
+tmux new -s <session-name>
 ```
 
 To attach a named session, do:
 
 ```
-tmux attach -t yourname
+tmux attach -t <session-name>
 ```
 
 You can view existing `tmux` sessions with:
@@ -299,7 +233,7 @@ tmux ls
 
 Please name any sessions on Magi nodes with your name and/or description.
 
-*Your sessions can be attached by other `viteklab` members.*
+*If you are using shared `viteklab` credentials, your sessions can be attached by other `viteklab` members.*
 
 This is useful for sharing an ongoing task among lab members, but please be careful not to attach another user's session without permission.
 
@@ -389,75 +323,6 @@ Environments can become quite large, so please try to re-use your environments a
 For shared projects, it is recommended to create a single `conda` environment to be used by multiple lab members.
 
 Please name your `conda` environments so their purposes are clear to other users.
-
-
-
-## SSH key setup
-
-It is strongly recommended to set up SSH key-based authentication for the intermediate Khoury login servers.
-
-If you have not already set up SSH keys, this can be done with the following steps:
-
-### 1. Generate a private key on your local machine:
-
-`ssh-keygen -t ed25519 -C "<your-email>@northeastern.edu"`
-
-Accepting the defaults is fine, but you can add an optional passphrase.
-
-### 2. Start the ssh-agent in the background:
-
-`eval "$(ssh-agent -s)"`
-
-### 3. Edit your configuration file:
-
-`vim ~/.ssh/config`
-
-On macOS, if you want to store the (optional) passphrase in your keychain:
-
-```
-Host *
-    UseKeychain yes
-    AddKeysToAgent yes
-    IdentityFile ~/.ssh/id_ed25519
-```
-
-Otherwise:
-
-```
-Host *
-    AddKeysToAgent yes
-    IdentityFile ~/.ssh/id_ed25519
-```
-
-You can also list specific hosts instead of `*`.
-
-### 4. Add your private key to the ssh-agent:
-
-On macOS, if you used a passphrase, you can do:
-
-`ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
-
-Otherwise:
-
-`ssh-add ~/.ssh/id_ed25519`
-
-### 5. Copy the public key from your local machine to the Khoury servers:
-
-`ssh-copy-id -i ~/.ssh/id_ed25519.pub <your-khoury-username>@login.khoury.northeastern.edu`
-
-You should now be able to access the Khoury servers using key-based authentication rather than using a password:
-
-`ssh <your-khoury-username>@login.khoury.northeastern.edu`
-
-(If you access the servers from multiple machines, you will need to do this on each machine you use.)
-
-### 6. Copy the public key from your local machine to the Magi servers:
-
-To set up SSH key-based authentication on Magi servers, you can use:
-
-```
-magi copy-id ~/.ssh/id_ed25519
-```
 
 
 
