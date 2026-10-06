@@ -9,7 +9,7 @@
 	"temp": {
 		"user": "$USER",
 		"paths": {
-			"default": "/Volumes/Temp/",
+			"default": "/Volumes/Temp/"
 		}
 	},
 	"magi": {
