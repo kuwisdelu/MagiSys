@@ -2,26 +2,26 @@
 	"local": {
 		"user": "$USER",
 		"paths": {
-			"default": "/Volumes/Local/Data/",
-			"external": "$HOME/External"
+			"default": "/Volumes/Projects/",
+			"temp": "/Volumes/Temp/"
 		}
 	},
-	"primary": {
+	"temp": {
 		"user": "$USER",
 		"paths": {
-			"default": "/Volumes/Primary/Data/"
-		},
-		"hosts": {
-			"default": "Magi-01.local"
+			"default": "/Volumes/Temp/",
 		}
 	},
-	"secondary": {
-		"user": "$USER",
+	"magi": {
+		"user": "$MAGI_USER",
 		"paths": {
-			"default": "/Volumes/Secondary/Data/"
+			"default": "/Volumes/Projects/",
+			"temp": "/Volumes/Temp/"
 		},
 		"hosts": {
-			"default": "Magi-02.local"
+			"01": "Magi-01.local",
+			"02": "Magi-02.local",
+			"03": "Magi-03.local"
 		}
 	},
 	"explorer":

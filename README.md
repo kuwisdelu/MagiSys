@@ -26,23 +26,20 @@ Currently, the following nodes are available to Vitek Lab members:
 
 - `Magi-02` : compute node (M2 Ultra / 16 p-cores / 8 e-cores / 192 GB)
 
+- `Magi-03` : compute node (M5 Ultra / 10 s-cores / 20 p-cores / 256 GB)
+
 ### Storage
 
-The following volumes may be available, depending on the node:
+Each node has the following volumes:
 
-- `/Volumes/Local`: internal NVMe storage (size varies; Apple fabric)
-- `/Volumes/Primary`: external NVMe storage (16TB; Thunderbolt)
-- `/Volumes/Secondary`: external NVMe storage (16TB; Thunderbolt)
+- `/Volumes/Temp`: internal NVMe storage (size varies; Apple fabric)
+- `/Volumes/Projects`: external NVMe storage (16TB; Thunderbolt)
 
-Each node has a "Local" volume dedicated to shared internal storage that should be readable and writeable by all lab members.
+Each node has a "Temp" volume on internal storage for workloads that require the fastest I/O speed.
 
-The "Primary" and "Secondary" volumes are external NVMe RAID0 arrays connected via Thunderbolt.
+Each node has a "Projects" volume on external NVMe RAID0 arrays connected via Thunderbolt.
 
-Typically, "Primary" will be attached to Magi-01, and "Secondary" will be attached to Magi-02, but this is subject to change as necessary.
-
-It is recommended to manually duplicate projects to both "Primary" and "Secondary" volumes, and keep them on "Local" only as needed.
-
-These should not be considered backups, but data on them may be backed up to another archival volume from time to time.
+These are __not__ backed up.
 
 ## Setup
 
@@ -155,9 +152,8 @@ export EXPLORER_USER="<your-explorer-username>"
 You should then have access to the following "sites":
 
 - `local`: local machine
-- `magi`: Magi cluster "Local" volume (only available if not on Magi)
-- `primary`: Magi cluster "Primary" storage volume
-- `secondary`: Magi cluster "Secondary" storage volume
+- `temp`: Magi cluster temporary storage
+- `magi`: Magi cluster projects storage
 - `explorer`: Explorer cluster
 
 
@@ -419,15 +415,15 @@ You should use Magi if:
 
 - You need faster single-core performance
 - You need fast SSD storage for out-of-core computing
-- You need less than 192 GB of memory
-- You need more memory on a GPU than is available on Discovery
-- You need software that is not available on Discovery
+- You need less than 256 GB of memory
+- You need more memory on a GPU than is available on Explorer
+- You need software that is not available on Explorer
 - Your data is already available on Magi
 
 You should use Explorer if:
 
-- You need more than 24 CPU cores
-- You need more than 192 GB of memory
+- You need more than 30 CPU cores
+- You need more than 256 GB of memory
 - You need a more powerful GPU than is available on Magi
 - You need multiple CPUs with >40 Gbps interconnect bandwidth
 - You need software that is not available on Magi

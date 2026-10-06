@@ -8,37 +8,13 @@
 	"magi": {
 		"user": "$MAGI_USER",
 		"paths": {
-			"default": "/Volumes/Local/Data/"
+			"default": "/Volumes/Projects/",
+			"temp": "/Volumes/Temp/"
 		},
 		"hosts": {
 			"01": "Magi-01",
-			"02": "Magi-02"
-		},
-		"proxy": {
-			"user": "$KHOURY_USER",
-			"host": "login.khoury.northeastern.edu"
-		}
-	},
-	"primary": {
-		"user": "$MAGI_USER",
-		"paths": {
-			"default": "/Volumes/Primary/Data/"
-		},
-		"hosts": {
-			"default": "Magi-01"
-		},
-		"proxy": {
-			"user": "$KHOURY_USER",
-			"host": "login.khoury.northeastern.edu"
-		}
-	},
-	"secondary": {
-		"user": "$MAGI_USER",
-		"paths": {
-			"default": "/Volumes/Secondary/Data/"
-		},
-		"hosts": {
-			"default": "Magi-02"
+			"02": "Magi-02",
+			"03": "Magi-03"
 		},
 		"proxy": {
 			"user": "$KHOURY_USER",
