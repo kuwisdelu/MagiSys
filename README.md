@@ -86,7 +86,7 @@ ssh <khoury-user>@login.khoury.northeastern.edu
 Replace `<magi-user>` with your username on the Magi cluser:
 
 ```{sh}
-ssh-copy-id -o JumpyProxy=<khoury-user>@login.khoury.northeastern.edu <magi-user>@Magi-01
+ssh-copy-id -o ProxyJump=<khoury-user>@login.khoury.northeastern.edu <magi-user>@Magi-01
 ```
 
 You should now be able to access the Khoury servers using key-based authentication rather than using a password:
